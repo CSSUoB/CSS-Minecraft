@@ -4,6 +4,7 @@ import club.minnced.discord.webhook.WebhookClient;
 import club.minnced.discord.webhook.WebhookClientBuilder;
 import club.minnced.discord.webhook.send.WebhookMessageBuilder;
 import com.cssbham.minecraftcore.MinecraftCore;
+import com.cssbham.minecraftcore.util.MessageUtil;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Guild;
@@ -12,7 +13,6 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
-import net.dv8tion.jda.api.utils.MarkdownSanitizer;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import okhttp3.OkHttpClient;
 import org.bukkit.ChatColor;
@@ -68,19 +68,19 @@ public class DiscordBridge extends ListenerAdapter {
                 event.getMessage().isEdited()) {
             return;
         }
-        String hexColor = String.format("#%06X", (0xFFFFFF & event.getMember().getColorRaw()));
+        String hexColor = String.format("#%06X", (0xFFFFFF & event.getMember().getColorRaw())).toLowerCase();
 
-        String output = String.format("%s[Discord]§r%s %s§r §7>§r %s",
-                net.md_5.bungee.api.ChatColor.of("#738abd"),
-                net.md_5.bungee.api.ChatColor.of(hexColor.toLowerCase()),
+        String output = String.format("%s%s %s§r §7>§r %s",
+                MessageUtil.getDiscordPrefix(),
+                MessageUtil.getChatColor(hexColor),
                 event.getMember().getEffectiveName(),
-                ChatColor.stripColor(event.getMessage().getContentStripped())
+                MessageUtil.sanitise(event.getMessage().getContentRaw())
         );
         core.getServer().broadcastMessage(output);
     }
 
     public void sendSanitisedMessageToDiscord(Player player, String message) {
-        this.sendMessageToDiscord(player, ChatColor.stripColor(MarkdownSanitizer.sanitize(message)));
+        this.sendMessageToDiscord(player, MessageUtil.sanitise(message));
     }
 
     public void sendMessageToDiscord(Player player, String message) {

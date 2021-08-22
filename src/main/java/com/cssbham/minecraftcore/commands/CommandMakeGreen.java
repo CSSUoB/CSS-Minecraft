@@ -1,10 +1,10 @@
 package com.cssbham.minecraftcore.commands;
 
 import com.cssbham.minecraftcore.discord.DiscordBridge;
+import com.cssbham.minecraftcore.util.MessageUtil;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.node.Node;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -36,20 +36,17 @@ public class CommandMakeGreen implements CommandExecutor {
 
         if (discordBridge.isMember(arg)) {
             LuckPerms perms = LuckPermsProvider.get();
-            perms.getUserManager().modifyUser(
-                    ((Player) sender).getUniqueId(),
+            perms.getUserManager().modifyUser(((Player) sender).getUniqueId(),
                     user -> {
                         user.data().add(Node.builder("group.member").build());
                         user.data().remove(Node.builder("group.guest").build());
                     }
             );
-            sender.sendMessage(ChatColor.of("#03e421") + "Congratulations, you are now green!");
+            sender.sendMessage(MessageUtil.getMemberGreen() + "Congratulations, you are now green!");
         } else {
-            sender.sendMessage(
-                    ChatColor.of("#2f3c63") + "[CSS] " +
-                            "§cIf you are a member, please link your account in Discord!\n" +
-                            "Or you can buy membership at https://cssbham.com/join"
-
+            sender.sendMessage(MessageUtil.getCSSPrefix() +
+                    "§cIf you are a member, please link your account in Discord!\n" +
+                    "Or you can buy membership at https://cssbham.com/join"
             );
         }
         return true;
