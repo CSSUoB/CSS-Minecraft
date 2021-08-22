@@ -1,0 +1,14 @@
+name: CSSMinecraft
+version: '${project.version}'
+main: com.cssbham.minecraftcore.MinecraftCore
+api-version: 1.17
+prefix: CSS
+authors: [ RaineTheBoosted ]
+description: The core plugin for CSS' Minecraft Server.
+website: https://github.com/CSSUoB/CSS-Minecraft
+depend: [ LuckPerms ]
+commands:
+  makegreen:
+    description: Make yourself green
+    usage: /<command> [Username\#1234]
+    aliases: [ mg ]
