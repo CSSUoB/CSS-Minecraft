@@ -1,7 +1,7 @@
-# CSS-Minecraft
+## CSS-Minecraft
 This is the source code for CSS' Minecraft plugin.
 
-# Building
+## Building
 
 Ensure that you have maven installed.
 Then:
@@ -15,7 +15,7 @@ There will now be a .jar file located in /target
 
 You can now put this .jar file in the /plugins folder in a Spigot/CraftBukkit 1.17.1 server and run the server.
 
-# Configuration
+## Configuration
 
 
 MEMBER_ROLE_ID: The ID of the role that the plugin checks against when someone runs the /makegreen command.
@@ -31,6 +31,10 @@ AVATAR_SERVICE: A link to an avatar service, with %s as a placeholder of the use
 BOT_TOKEN: The token of the Discord bot that will be detecting messages to send to Minecraft, as well as Member roles.
 
 
-# Development
+## Dependencies
+
+This plugin depends on [LuckPerms](https://www.spigotmc.org/resources/luckperms.28140/), which needs to be placed alongside this in the /plugins folder.
+
+## Development
 
 PR's welcome, feel free to do whatever.
