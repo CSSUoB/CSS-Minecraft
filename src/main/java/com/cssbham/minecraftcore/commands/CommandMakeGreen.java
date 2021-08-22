@@ -26,11 +26,8 @@ public class CommandMakeGreen implements CommandExecutor {
             sender.sendMessage("Only players can execute this command.");
             return true;
         }
-        if (args.length != 1) {
-            return false;
-        }
-        String arg = args[0];
-        if (!arg.matches(".{3,32}#[0-9]{4}")) {
+        String arg = String.join(" ", args);
+        if (!arg.matches(".{2,32}#[0-9]{4}")) {
             return false;
         }
 
