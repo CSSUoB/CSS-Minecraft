@@ -22,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.security.auth.login.LoginException;
 
-public class TeXBot extends ListenerAdapter {
+public class DiscordBridge extends ListenerAdapter {
 
     private final Long MEMBER_ROLE_ID;
     private final Long BRIDGE_CHANNEL_ID;
@@ -34,7 +34,7 @@ public class TeXBot extends ListenerAdapter {
     private WebhookClient webhook = null;
     private boolean shutdown = false;
 
-    public TeXBot(MinecraftCore core) throws LoginException, ClassCastException {
+    public DiscordBridge(MinecraftCore core) throws LoginException, ClassCastException {
 
         FileConfiguration configuration = core.getConfig();
         core.reloadConfig();
@@ -44,16 +44,6 @@ public class TeXBot extends ListenerAdapter {
         AVATAR = configuration.getString("AVATAR_SERVICE");
         final String BOT_TOKEN = configuration.getString("BOT_TOKEN");
         final String WEBHOOK_URL = configuration.getString("WEBHOOK_URL");
-
-        System.out.println("mem role: " + MEMBER_ROLE_ID + "\nbrd chan: " + BRIDGE_CHANNEL_ID +
-                "\ndid: "+ DISCORD_SERVER_ID + "\nava: "+ AVATAR + "\ntkn: " + BOT_TOKEN + "\nwhu :" +  WEBHOOK_URL);
-
-//        if (MEMBER_ROLE_ID == 0 || BRIDGE_CHANNEL_ID == 0 || DISCORD_SERVER_ID == 0 ||
-//                AVATAR == null || WEBHOOK_URL == null || BOT_TOKEN == null) {
-//            System.out.println("disabling self");
-//            core.getPluginLoader().disablePlugin(core);
-//            return;
-//        }
 
         this.core = core;
         this.jda = JDABuilder.createDefault(

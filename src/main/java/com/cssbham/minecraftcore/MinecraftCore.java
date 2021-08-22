@@ -1,7 +1,7 @@
 package com.cssbham.minecraftcore;
 
 import com.cssbham.minecraftcore.commands.CommandMakeGreen;
-import com.cssbham.minecraftcore.discord.TeXBot;
+import com.cssbham.minecraftcore.discord.DiscordBridge;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -11,23 +11,23 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class MinecraftCore extends JavaPlugin implements Listener {
 
-    private TeXBot teXBot;
+    private DiscordBridge discordBridge;
 
     @Override
     @SuppressWarnings("ConstantConditions")
     public void onEnable() {
         saveDefaultConfig();
-        if (teXBot != null) {
-            teXBot.shutdown();
+        if (discordBridge != null) {
+            discordBridge.shutdown();
         }
         try {
-            teXBot = new TeXBot(this);
+            discordBridge = new DiscordBridge(this);
         } catch (Exception e) {
             return;
         }
 
         this.getServer().getPluginManager().registerEvents(this, this);
-        this.getCommand("makegreen").setExecutor(new CommandMakeGreen(teXBot));
+        this.getCommand("makegreen").setExecutor(new CommandMakeGreen(discordBridge));
         this.getLogger().info("Plugin has been enabled.");
 
     }
@@ -36,8 +36,8 @@ public final class MinecraftCore extends JavaPlugin implements Listener {
     public void onDisable() {
         this.getLogger().warning("Plugin has been disabled.");
         try {
-            teXBot.shutdown();
-            teXBot = null;
+            discordBridge.shutdown();
+            discordBridge = null;
         } catch (Exception ignored) {
         }
         // Plugin shutdown logic
@@ -45,16 +45,16 @@ public final class MinecraftCore extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent event) {
-        teXBot.sendSanitisedMessageToDiscord(event.getPlayer(), event.getMessage());
+        discordBridge.sendSanitisedMessageToDiscord(event.getPlayer(), event.getMessage());
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        teXBot.sendMessageToDiscord(event.getPlayer(), "__*has joined the server*__");
+        discordBridge.sendMessageToDiscord(event.getPlayer(), "__*has joined the server*__");
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        teXBot.sendMessageToDiscord(event.getPlayer(), "__*has left the server*__");
+        discordBridge.sendMessageToDiscord(event.getPlayer(), "__*has left the server*__");
     }
 }

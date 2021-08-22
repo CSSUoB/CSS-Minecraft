@@ -1,6 +1,6 @@
 package com.cssbham.minecraftcore.commands;
 
-import com.cssbham.minecraftcore.discord.TeXBot;
+import com.cssbham.minecraftcore.discord.DiscordBridge;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.node.Node;
@@ -13,10 +13,10 @@ import org.jetbrains.annotations.NotNull;
 
 public class CommandMakeGreen implements CommandExecutor {
 
-    private final TeXBot teXBot;
+    private final DiscordBridge discordBridge;
 
-    public CommandMakeGreen(TeXBot teXBot) {
-        this.teXBot = teXBot;
+    public CommandMakeGreen(DiscordBridge discordBridge) {
+        this.discordBridge = discordBridge;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class CommandMakeGreen implements CommandExecutor {
             return false;
         }
 
-        if (teXBot.isMember(arg)) {
+        if (discordBridge.isMember(arg)) {
             LuckPerms perms = LuckPermsProvider.get();
             perms.getUserManager().modifyUser(
                     ((Player) sender).getUniqueId(),
