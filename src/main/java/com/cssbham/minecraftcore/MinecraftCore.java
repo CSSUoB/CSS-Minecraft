@@ -2,6 +2,7 @@ package com.cssbham.minecraftcore;
 
 import com.cssbham.minecraftcore.commands.CommandMakeGreen;
 import com.cssbham.minecraftcore.discord.DiscordBridge;
+import org.bukkit.Server;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -50,11 +51,35 @@ public final class MinecraftCore extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        discordBridge.sendMessageToDiscord(event.getPlayer(), "__*has joined the server*__");
+        discordBridge.sendMessageToDiscord(event.getPlayer(),
+                "__*has joined the server, "  + getOnlineMessage(event.getPlayer().getServer(), false) + "*__");
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        discordBridge.sendMessageToDiscord(event.getPlayer(), "__*has left the server*__");
+        discordBridge.sendMessageToDiscord(event.getPlayer(),
+                "__*has left the server, " + getOnlineMessage(event.getPlayer().getServer(), true) + "*__");
+    }
+
+    private String getOnlineMessage(Server server, boolean leaving) {
+        int amount = server.getOnlinePlayers().size();
+        if (leaving) {
+            amount--;
+        }
+        // This shouldn't? happen.
+        if (amount < 0) {
+            amount = 0;
+        }
+        switch (amount) {
+            case 0: {
+                return "there are now no players online.";
+            }
+            case 1: {
+                return "there is now 1 player online.";
+            }
+            default: {
+                return "there are now " + amount + " players online.";
+            }
+        }
     }
 }
