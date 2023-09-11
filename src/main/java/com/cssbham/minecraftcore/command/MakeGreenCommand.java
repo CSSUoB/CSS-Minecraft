@@ -39,7 +39,7 @@ public class MakeGreenCommand implements CozyCommand {
 
     @Override
     public @Nullable String getSyntax() {
-        return "/<command> [Discord Username#1234]";
+        return "/<command> [Discord Username]";
     }
 
     @Override
