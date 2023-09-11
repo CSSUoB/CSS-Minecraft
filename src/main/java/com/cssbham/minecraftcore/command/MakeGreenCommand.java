@@ -54,7 +54,7 @@ public class MakeGreenCommand implements CozyCommand {
 
     @Override
     public @Nullable CommandSuggestions getSuggestions(@NotNull User user, @NotNull CommandArguments arguments) {
-        return new CommandSuggestions().append(new String[]{"<Name#number>"});
+        return new CommandSuggestions().append(new String[]{"<Username>"});
     }
 
     @Override
@@ -73,12 +73,6 @@ public class MakeGreenCommand implements CozyCommand {
 
         // Get the first argument.
         String discordUsername = arguments.getArguments().get(0);
-
-        // Check if the username is in the correct format.
-        if (!discordUsername.matches(".{2,32}#[0-9]{4}")) {
-            user.sendMessage("&7Incorrect arguments. &f" + this.getSyntax());
-            return new CommandStatus();
-        }
 
         // Check if they are a member.
         if (!MinecraftCore.getDiscordBridge().isMember(discordUsername)) {

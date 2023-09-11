@@ -161,14 +161,14 @@ public class DiscordBridge extends ListenerAdapter {
     /**
      * Used to check if a user is a member on the discord.
      *
-     * @param identifier The member's discord identifier.
+     * @param username The member's discord username.
      * @return True if they are a member.
      */
-    public boolean isMember(String identifier) {
+    public boolean isMember(String username) {
         if (this.shutdown) return false;
 
         if (this.jda.getStatus() != JDA.Status.CONNECTED) {
-            ConsoleManager.warn("JDA is not connected.");
+            ConsoleManager.warn("JDA is not connected. This could be due to the bot not having Privileged Gateway Intents.");
             return false;
         }
 
@@ -180,10 +180,13 @@ public class DiscordBridge extends ListenerAdapter {
 
         // May need updating in the future.
         Member member = guild.getMembers().stream()
-                .filter(m -> (m.getUser().getName() + "#" + m.getUser().getDiscriminator())
-                        .equalsIgnoreCase(identifier))
+                .filter(m -> m.getUser().getName().equalsIgnoreCase(username))
                 .findFirst()
                 .orElse(null);
+
+        for (Member member1 : guild.getMembers()) {
+            System.out.println(member1.getUser().getName());
+        }
 
         // Check if they have the member role.
         return member != null && member.getRoles().stream().anyMatch(r -> r.getIdLong() == MEMBER_ROLE_ID);
