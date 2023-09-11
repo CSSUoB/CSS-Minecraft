@@ -1,22 +1,27 @@
 package com.cssbham.minecraftcore;
 
-import com.cssbham.minecraftcore.command.CommandMakeGreen;
+import com.cssbham.minecraftcore.command.MakeGreenCommand;
 import com.cssbham.minecraftcore.discord.DiscordBridge;
 import com.cssbham.minecraftcore.discord.DiscordRuntimeException;
+import com.cssbham.minecraftcore.listener.PlayerListener;
+import com.github.cozyplugins.cozylibrary.CozyPlugin;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * Main plugin class.
  */
-public final class MinecraftCore extends JavaPlugin implements Listener {
+public final class MinecraftCore extends CozyPlugin implements Listener {
 
     private static DiscordBridge discordBridge;
 
     @Override
-    @SuppressWarnings("ConstantConditions")
-    public void onEnable() {
+    public boolean enableCommandDirectory() {
+        return false;
+    }
+
+    @Override
+    public void onCozyEnable() {
         this.saveDefaultConfig();
 
         // Check if discord bridge is already active.
@@ -32,10 +37,10 @@ public final class MinecraftCore extends JavaPlugin implements Listener {
         }
 
         // Register events.
-        this.getServer().getPluginManager().registerEvents(this, this);
+        this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
 
         // Setup commands.
-        this.getCommand("makegreen").setExecutor(new CommandMakeGreen(MinecraftCore.discordBridge));
+        this.addCommand(new MakeGreenCommand());
 
         // Log enable message.
         this.getLogger().info("Plugin has been enabled.");
