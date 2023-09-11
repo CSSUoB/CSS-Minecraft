@@ -5,6 +5,7 @@ import club.minnced.discord.webhook.WebhookClientBuilder;
 import club.minnced.discord.webhook.send.WebhookEmbed;
 import club.minnced.discord.webhook.send.WebhookMessageBuilder;
 import com.cssbham.minecraftcore.utility.MessageUtility;
+import com.github.cozyplugins.cozylibrary.ConsoleManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Guild;
@@ -164,8 +165,18 @@ public class DiscordBridge extends ListenerAdapter {
      * @return True if they are a member.
      */
     public boolean isMember(String identifier) {
+        if (this.shutdown) return false;
+
+        if (this.jda.getStatus() != JDA.Status.CONNECTED) {
+            ConsoleManager.warn("JDA is not connected.");
+            return false;
+        }
+
         Guild guild = this.jda.getGuildById(DISCORD_SERVER_ID);
-        if (guild == null) return false;
+        if (guild == null) {
+            ConsoleManager.warn("Discord server id is incorrect.");
+            return false;
+        }
 
         // May need updating in the future.
         Member member = guild.getMembers().stream()
@@ -182,5 +193,6 @@ public class DiscordBridge extends ListenerAdapter {
         shutdown = true;
         jda.shutdownNow();
         webhook.close();
+        ConsoleManager.warn("Discord bridge has been shutdown.");
     }
 }
