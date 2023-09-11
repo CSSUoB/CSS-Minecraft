@@ -29,12 +29,18 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
-        
+
         <!-- JDA -->
         <repository>
             <id>dv8tion</id>
             <name>m2-dv8tion</name>
             <url>https://m2.dv8tion.net/releases</url>
+        </repository>
+
+        <!-- GitHub Repos -->
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
         </repository>
     </repositories>
 
@@ -53,6 +59,13 @@
             <artifactId>api</artifactId>
             <version>5.3</version>
             <scope>provided</scope>
+        </dependency>
+
+        <!-- Minecraft Library -->
+        <dependency>
+            <groupId>com.github.Cozy-Plugins</groupId>
+            <artifactId>CozyLibrary</artifactId>
+            <version>1.2.3</version>
         </dependency>
 
         <!-- Discord Bot -->
@@ -83,8 +96,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <source>14</source>
+                    <target>14</target>
                 </configuration>
             </plugin>
             <plugin>
