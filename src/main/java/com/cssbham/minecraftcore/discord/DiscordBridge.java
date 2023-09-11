@@ -184,10 +184,6 @@ public class DiscordBridge extends ListenerAdapter {
                 .findFirst()
                 .orElse(null);
 
-        for (Member member1 : guild.getMembers()) {
-            System.out.println(member1.getUser().getName());
-        }
-
         // Check if they have the member role.
         return member != null && member.getRoles().stream().anyMatch(r -> r.getIdLong() == MEMBER_ROLE_ID);
     }
