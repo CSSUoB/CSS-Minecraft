@@ -1,5 +1,7 @@
 package com.cssbham.minecraftcore.listener;
 
+import club.minnced.discord.webhook.send.WebhookEmbed;
+import club.minnced.discord.webhook.send.WebhookEmbedBuilder;
 import com.cssbham.minecraftcore.MinecraftCore;
 import org.bukkit.Server;
 import org.bukkit.event.EventHandler;
@@ -22,26 +24,32 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        MinecraftCore.getDiscordBridge()
-                .sendMessageToDiscord(
-                        event.getPlayer(),
-                "__*has joined the server, "  + getOnlineMessage(event.getPlayer().getServer(), false) + "*__"
-                );
+        MinecraftCore.getDiscordBridge().sendMessageToDiscord(
+                event.getPlayer(),
+                new WebhookEmbedBuilder()
+                        .setColor(0x00FF00)
+                        .setTitle(new WebhookEmbed.EmbedTitle(event.getPlayer().getName() + " has joined the server", null))
+                        .setDescription(getOnlineMessage(event.getPlayer().getServer(), false))
+                        .build()
+        );
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        MinecraftCore.getDiscordBridge()
-                .sendMessageToDiscord(
-                        event.getPlayer(),
-                "__*has left the server, " + getOnlineMessage(event.getPlayer().getServer(), true) + "*__"
-                );
+        MinecraftCore.getDiscordBridge().sendMessageToDiscord(
+                event.getPlayer(),
+                new WebhookEmbedBuilder()
+                        .setColor(0xFF0000)
+                        .setTitle(new WebhookEmbed.EmbedTitle(event.getPlayer().getName() + " has left the server", null))
+                        .setDescription(getOnlineMessage(event.getPlayer().getServer(), true))
+                        .build()
+        );
     }
 
     /**
      * Used to get the online message.
      *
-     * @param server The instance of the server. If there are multiple servers.
+     * @param server  The instance of the server. If there are multiple servers.
      * @param leaving True if the player is leaving the server.
      * @return The message to send.
      */

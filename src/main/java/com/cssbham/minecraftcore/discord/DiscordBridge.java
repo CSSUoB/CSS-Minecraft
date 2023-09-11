@@ -2,6 +2,7 @@ package com.cssbham.minecraftcore.discord;
 
 import club.minnced.discord.webhook.WebhookClient;
 import club.minnced.discord.webhook.WebhookClientBuilder;
+import club.minnced.discord.webhook.send.WebhookEmbed;
 import club.minnced.discord.webhook.send.WebhookMessageBuilder;
 import com.cssbham.minecraftcore.utility.MessageUtility;
 import net.dv8tion.jda.api.JDA;
@@ -103,7 +104,7 @@ public class DiscordBridge extends ListenerAdapter {
      * Used to send a message to discord where the chat colors
      * have been removed.
      *
-     * @param player The instance of the player.
+     * @param player  The instance of the player.
      * @param message The message to send.
      */
     public void sendSanitisedMessageToDiscord(@NotNull Player player, @NotNull String message) {
@@ -127,6 +128,33 @@ public class DiscordBridge extends ListenerAdapter {
         }
 
         // https://github.com/DV8FromTheWorld/JDA/issues/1761
+    }
+
+    /**
+     * Used to send an embed to the discord channel.
+     *
+     * @param embed The instance of an embed.
+     *              The embed can be created with
+     *              {@link club.minnced.discord.webhook.send.WebhookEmbedBuilder}.
+     * @return This instance.
+     */
+    public @NotNull DiscordBridge sendMessageToDiscord(@NotNull Player player, @NotNull WebhookEmbed embed) {
+        if (shutdown) return this;
+
+        try {
+
+            // Send the message though the webhook.
+            webhook.send(new WebhookMessageBuilder()
+                    .setAvatarUrl(String.format(AVATAR, player.getName()))
+                    .setUsername(ChatColor.stripColor(player.getDisplayName()))
+                    .addEmbeds(embed)
+                    .build());
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+
+        return this;
     }
 
     /**
