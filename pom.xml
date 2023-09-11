@@ -61,11 +61,11 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Minecraft Library -->
+        <!-- Minecraft Library (For easy tab completion) -->
         <dependency>
             <groupId>com.github.Cozy-Plugins</groupId>
             <artifactId>CozyLibrary</artifactId>
-            <version>1.2.3</version>
+            <version>1.2.5</version>
         </dependency>
 
         <!-- Discord Bot -->
