@@ -1,9 +1,13 @@
-package com.cssbham.minecraftcore.util;
+package com.cssbham.minecraftcore.utility;
 
 import net.dv8tion.jda.api.utils.MarkdownSanitizer;
 import net.md_5.bungee.api.ChatColor;
+import org.jetbrains.annotations.NotNull;
 
-public class MessageUtil {
+/**
+ * Represents the message utility.
+ */
+public class MessageUtility {
 
     public static String getDiscordPrefix() {
         return ChatColor.of("#738abd") + "[Discord]" + ChatColor.RESET;
@@ -14,7 +18,7 @@ public class MessageUtil {
     }
 
     public static String getMemberGreen() {
-        return MessageUtil.getChatColor("#03e421");
+        return MessageUtility.getChatColor("#03e421");
     }
 
     public static String getChatColor(String color) {
@@ -23,5 +27,17 @@ public class MessageUtil {
 
     public static String sanitise(String message) {
         return ChatColor.stripColor(MarkdownSanitizer.sanitize(message));
+    }
+
+    /**
+     * Used to translate the color codes.
+     * Normally translating them from & to § so colors
+     * are registered.
+     *
+     * @param message The message to translate.
+     * @return The requested translation.
+     */
+    public static @NotNull String translate(@NotNull String message) {
+        return ChatColor.translateAlternateColorCodes('&', message);
     }
 }

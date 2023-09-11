@@ -1,85 +1,68 @@
 package com.cssbham.minecraftcore;
 
-import com.cssbham.minecraftcore.commands.CommandMakeGreen;
+import com.cssbham.minecraftcore.command.CommandMakeGreen;
 import com.cssbham.minecraftcore.discord.DiscordBridge;
-import org.bukkit.Server;
-import org.bukkit.event.EventHandler;
+import com.cssbham.minecraftcore.discord.DiscordRuntimeException;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
+/**
+ * Main plugin class.
+ */
 public final class MinecraftCore extends JavaPlugin implements Listener {
 
-    private DiscordBridge discordBridge;
+    private static DiscordBridge discordBridge;
 
     @Override
     @SuppressWarnings("ConstantConditions")
     public void onEnable() {
-        saveDefaultConfig();
-        if (discordBridge != null) {
-            discordBridge.shutdown();
+        this.saveDefaultConfig();
+
+        // Check if discord bridge is already active.
+        if (MinecraftCore.discordBridge != null) {
+            MinecraftCore.discordBridge.shutdown();
         }
+
         try {
-            discordBridge = new DiscordBridge(this);
-        } catch (Exception e) {
+            MinecraftCore.discordBridge = new DiscordBridge(this);
+        } catch (Exception exception) {
+            exception.printStackTrace();
             return;
         }
 
+        // Register events.
         this.getServer().getPluginManager().registerEvents(this, this);
-        this.getCommand("makegreen").setExecutor(new CommandMakeGreen(discordBridge));
-        this.getLogger().info("Plugin has been enabled.");
 
+        // Setup commands.
+        this.getCommand("makegreen").setExecutor(new CommandMakeGreen(MinecraftCore.discordBridge));
+
+        // Log enable message.
+        this.getLogger().info("Plugin has been enabled.");
     }
 
     @Override
     public void onDisable() {
         this.getLogger().warning("Plugin has been disabled.");
+
+        // Attempt to shut down the discord bridge.
         try {
-            discordBridge.shutdown();
-            discordBridge = null;
-        } catch (Exception ignored) {
+            MinecraftCore.discordBridge.shutdown();
+            MinecraftCore.discordBridge = null;
+        } catch (Exception exception) {
+            exception.printStackTrace();
         }
-        // Plugin shutdown logic
     }
 
-    @EventHandler
-    public void onPlayerChat(AsyncPlayerChatEvent event) {
-        discordBridge.sendSanitisedMessageToDiscord(event.getPlayer(), event.getMessage());
-    }
-
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
-        discordBridge.sendMessageToDiscord(event.getPlayer(),
-                "__*has joined the server, "  + getOnlineMessage(event.getPlayer().getServer(), false) + "*__");
-    }
-
-    @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent event) {
-        discordBridge.sendMessageToDiscord(event.getPlayer(),
-                "__*has left the server, " + getOnlineMessage(event.getPlayer().getServer(), true) + "*__");
-    }
-
-    private String getOnlineMessage(Server server, boolean leaving) {
-        int amount = server.getOnlinePlayers().size();
-        if (leaving) {
-            amount--;
+    /**
+     * Used to get the instance of the discord bridge.
+     *
+     * @return The instance of the discord bridge.
+     */
+    public static @NotNull DiscordBridge getDiscordBridge() {
+        if (MinecraftCore.discordBridge == null) {
+            throw new DiscordRuntimeException("Discord bridge is null.");
         }
-        // This shouldn't? happen.
-        if (amount < 0) {
-            amount = 0;
-        }
-        switch (amount) {
-            case 0: {
-                return "there are now no players online.";
-            }
-            case 1: {
-                return "there is now 1 player online.";
-            }
-            default: {
-                return "there are now " + amount + " players online.";
-            }
-        }
+        return MinecraftCore.discordBridge;
     }
 }

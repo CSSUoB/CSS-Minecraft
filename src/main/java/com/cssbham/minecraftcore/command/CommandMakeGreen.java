@@ -1,7 +1,7 @@
-package com.cssbham.minecraftcore.commands;
+package com.cssbham.minecraftcore.command;
 
 import com.cssbham.minecraftcore.discord.DiscordBridge;
-import com.cssbham.minecraftcore.util.MessageUtil;
+import com.cssbham.minecraftcore.utility.MessageUtility;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.node.Node;
@@ -13,19 +13,15 @@ import org.jetbrains.annotations.NotNull;
 
 public class CommandMakeGreen implements CommandExecutor {
 
-    private final DiscordBridge discordBridge;
-
-    public CommandMakeGreen(DiscordBridge discordBridge) {
-        this.discordBridge = discordBridge;
-    }
-
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command,
                              @NotNull String label, @NotNull String[] args) {
+
         if (!(sender instanceof Player)) {
             sender.sendMessage("Only players can execute this command.");
             return true;
         }
+
         String arg = String.join(" ", args);
         if (!arg.matches(".{2,32}#[0-9]{4}")) {
             return false;
@@ -39,9 +35,9 @@ public class CommandMakeGreen implements CommandExecutor {
                         user.data().remove(Node.builder("group.guest").build());
                     }
             );
-            sender.sendMessage(MessageUtil.getMemberGreen() + "Congratulations, you are now green!");
+            sender.sendMessage(MessageUtility.getMemberGreen() + "Congratulations, you are now green!");
         } else {
-            sender.sendMessage(MessageUtil.getCSSPrefix() +
+            sender.sendMessage(MessageUtility.getCSSPrefix() +
                     "§cIf you are a member, please link your account in Discord!\n" +
                     "Or you can buy membership at https://cssbham.com/join"
             );
