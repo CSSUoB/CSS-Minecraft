@@ -83,7 +83,7 @@ public class MakeGreenCommand implements CozyCommand {
         // Check if they are a member.
         if (!MinecraftCore.getDiscordBridge().isMember(discordUsername)) {
             user.sendMessage(MessageUtility.getCSSPrefix() +
-                    "&cIf you are a member, please link your account in Discord!\n" +
+                    " &cIf you are a member, please link your account in Discord!\n" +
                     "&fOr you can buy membership at https://cssbham.com/join"
             );
             return new CommandStatus();
