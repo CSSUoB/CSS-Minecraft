@@ -7,8 +7,3 @@ authors: [ RaineTheBoosted ]
 description: The core plugin for CSS' Minecraft Server.
 website: https://github.com/CSSUoB/CSS-Minecraft
 depend: [ LuckPerms ]
-commands:
-  makegreen:
-    description: Make yourself green by verifying your CSS membership.
-    usage: /<command> [Discord Username#1234]
-    aliases: [ mg, green ]

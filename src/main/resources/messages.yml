@@ -1,0 +1,10 @@
+MESSAGE: "#4a9efe[CSS]"
+ERROR: "&7"
+
+# You can use the placeholders in the messages below.
+# {error}, {message}
+
+ERROR_NOT_PLAYER_COMMAND: "{error} This command cannot be run by a player."
+ERROR_NOT_CONSOLE_COMMAND: "{error} This command cannot be run by the console."
+ERROR_NOT_FAKE_PLAYER_COMMAND: "{error} This command cannot be run by a fake player."
+ERROR_NO_PERMISSION: "{error} You lack permissions to execute this command."
