@@ -60,8 +60,8 @@ public class DiscordBridge extends ListenerAdapter {
     }
 
     @Override
-    public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
-        if (shutdown || event.getChannel().getIdLong() != BRIDGE_CHANNEL_ID ||
+    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
+        if (!event.isFromGuild() || shutdown || event.getChannel().getIdLong() != BRIDGE_CHANNEL_ID ||
                 event.isWebhookMessage() ||
                 event.getMember() == null ||
                 event.getAuthor().isBot() ||
