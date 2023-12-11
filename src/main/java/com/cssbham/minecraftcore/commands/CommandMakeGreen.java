@@ -27,7 +27,7 @@ public class CommandMakeGreen implements CommandExecutor {
             return true;
         }
         String arg = String.join(" ", args);
-        if (!arg.matches(".{2,32}#[0-9]{4}")) {
+        if (!arg.matches("[a-z0-9._]{2,32}|.{2,32}#[0-9]{4}")) {
             return false;
         }
 

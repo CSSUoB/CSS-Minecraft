@@ -101,7 +101,8 @@ public class DiscordBridge extends ListenerAdapter {
         if (g == null) return false;
         Member m = g.getMembers().stream()
                 .filter(mm ->
-                        (mm.getUser().getName() + "#" + mm.getUser().getDiscriminator()).equalsIgnoreCase(identifier)
+                        (mm.getUser().getName() + "#" + mm.getUser().getDiscriminator()).equalsIgnoreCase(identifier) ||
+                        mm.getUser().getName().equalsIgnoreCase(identifier)
                 ).findFirst().orElse(null);
         if (m == null) return false;
         return m.getRoles().stream().anyMatch(r -> r.getIdLong() == MEMBER_ROLE_ID);
