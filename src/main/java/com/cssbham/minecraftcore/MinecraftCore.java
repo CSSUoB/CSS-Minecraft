@@ -52,13 +52,13 @@ public final class MinecraftCore extends JavaPlugin implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         discordBridge.sendMessageToDiscord(event.getPlayer(),
-                "__*has joined the server, "  + getOnlineMessage(event.getPlayer().getServer(), false) + "*__");
+                "**has joined the server, "  + getOnlineMessage(event.getPlayer().getServer(), false) + "**");
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         discordBridge.sendMessageToDiscord(event.getPlayer(),
-                "__*has left the server, " + getOnlineMessage(event.getPlayer().getServer(), true) + "*__");
+                "**has left the server, " + getOnlineMessage(event.getPlayer().getServer(), true) + "**");
     }
 
     private String getOnlineMessage(Server server, boolean leaving) {
