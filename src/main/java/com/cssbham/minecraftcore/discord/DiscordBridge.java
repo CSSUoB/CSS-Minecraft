@@ -50,7 +50,7 @@ public class DiscordBridge extends ListenerAdapter {
                 BOT_TOKEN
         ).setMemberCachePolicy(MemberCachePolicy.ALL)
                 .setChunkingFilter(ChunkingFilter.ALL)
-                .enableIntents(GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MEMBERS).addEventListeners(this).build();
+                .enableIntents(GatewayIntent.GUILD_MEMBERS, GatewayIntent.MESSAGE_CONTENT).addEventListeners(this).build();
         this.webhook = new WebhookClientBuilder(WEBHOOK_URL)
                 .setThreadFactory(Thread::new)
                 .setDaemon(true)
