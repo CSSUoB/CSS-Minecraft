@@ -22,6 +22,6 @@ public class MessageUtil {
     }
 
     public static String sanitise(String message) {
-        return ChatColor.stripColor(MarkdownSanitizer.sanitize(message));
+        return ChatColor.stripColor(MarkdownSanitizer.sanitize(message).replace("@", "(at)"));
     }
 }
