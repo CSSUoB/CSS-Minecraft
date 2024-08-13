@@ -1,0 +1,9 @@
+name: CSSMinecraft
+version: '${version}'
+main: com.cssbham.cssminecraft.bukkit.CSSMinecraftLoader
+api-version: 1.17
+prefix: CSS
+authors: [ RaineTheBoosted, LMBishop ]
+description: CSS' Minecraft plugin
+website: https://github.com/CSSUoB/CSS-Minecraft
+softdepend: [ LuckPerms ]

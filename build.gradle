@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+    id 'com.gradleup.shadow' version '8.3.0'
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'com.gradleup.shadow'
+
+    group = 'com.cssbham'
+    version = '1.0.0'
+
+    sourceCompatibility = 21
+    targetCompatibility = 21
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+
+    tasks.withType(Javadoc) {
+        options.encoding = 'UTF-8'
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    shadowJar {
+        // relocate 'club.minnced', 'com.cssbham.cssminecraft.lib.discordwebhook'
+        // relocate 'net.dv8tion.jda', 'com.cssbham.cssminecraft.lib.jda'
+        // relocate 'org.yaml.snakeyaml', 'com.cssbham.cssminecraft.lib.snakeyaml'
+
+        minimize()
+    }
+
+    assemble.dependsOn shadowJar
+}
+

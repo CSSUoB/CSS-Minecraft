@@ -1,0 +1,6 @@
+rootProject.name = 'css-minecraft'
+
+include(
+        'common',
+        'bukkit'
+)
