@@ -25,14 +25,6 @@ subprojects {
         mavenCentral()
     }
 
-    shadowJar {
-        // relocate 'club.minnced', 'com.cssbham.cssminecraft.lib.discordwebhook'
-        // relocate 'net.dv8tion.jda', 'com.cssbham.cssminecraft.lib.jda'
-        // relocate 'org.yaml.snakeyaml', 'com.cssbham.cssminecraft.lib.snakeyaml'
-
-        minimize()
-    }
-
     assemble.dependsOn shadowJar
 }
 

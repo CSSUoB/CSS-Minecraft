@@ -33,11 +33,28 @@ public class JDADiscordClient extends ListenerAdapter implements DiscordClient {
 
     @Override
     public void initialise() {
+        if (null != this.jda) {
+            return;
+        }
+
         this.jda = JDABuilder.createDefault(
                         botToken
                 ).setMemberCachePolicy(MemberCachePolicy.ALL)
                 .setChunkingFilter(ChunkingFilter.ALL)
-                .enableIntents(GatewayIntent.GUILD_MEMBERS, GatewayIntent.MESSAGE_CONTENT).addEventListeners(this).build();
+                .enableIntents(GatewayIntent.GUILD_MEMBERS, GatewayIntent.MESSAGE_CONTENT)
+                .addEventListeners(this)
+                .build();
+    }
+
+
+    @Override
+    public void shutdown() {
+        if (null == this.jda) {
+            return;
+        }
+
+        jda.shutdownNow();
+        this.jda = null;
     }
 
     @Override
@@ -68,11 +85,6 @@ public class JDADiscordClient extends ListenerAdapter implements DiscordClient {
                 ).findFirst().orElse(null);
         if (m == null) return false;
         return m.getRoles().stream().anyMatch(r -> r.getIdLong() == memberRoleId);
-    }
-
-    @Override
-    public void shutdown() {
-        jda.shutdownNow();
     }
 
 }

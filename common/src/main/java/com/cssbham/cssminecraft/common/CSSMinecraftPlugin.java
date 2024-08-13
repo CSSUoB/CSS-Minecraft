@@ -6,5 +6,7 @@ public interface CSSMinecraftPlugin {
 
     void enable();
 
+    void disable();
+
     Logger getLogger();
 }

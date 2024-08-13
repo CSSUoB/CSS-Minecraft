@@ -1,6 +1,17 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven {
+            name = 'Fabric'
+            url = 'https://maven.fabricmc.net/'
+        }
+    }
+}
+
 rootProject.name = 'css-minecraft'
 
 include(
         'common',
-        'bukkit'
+        'bukkit',
+        'fabric'
 )

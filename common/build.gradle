@@ -1,12 +1,13 @@
 plugins {
     id 'java'
+    id 'java-library'
 }
 
 dependencies {
-    implementation 'net.dv8tion:JDA:5.0.2'
-    implementation 'club.minnced:discord-webhooks:0.8.4'
-    implementation 'org.yaml:snakeyaml:2.2'
-    implementation 'net.kyori:adventure-api:4.17.0'
-    implementation 'net.kyori:adventure-text-serializer-plain:4.17.0'
+    api 'net.dv8tion:JDA:5.0.2'
+    api 'club.minnced:discord-webhooks:0.8.4'
+    api 'org.yaml:snakeyaml:2.2'
+    api 'net.kyori:adventure-api:4.17.0'
+    api 'net.kyori:adventure-text-serializer-plain:4.17.0'
+    api 'net.kyori:adventure-text-serializer-gson:4.17.0'
 }
-

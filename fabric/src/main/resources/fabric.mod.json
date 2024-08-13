@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "cssminecraft",
+  "version": "${version}",
+  "name": "CSSMinecraft",
+  "description": "CSS' Minecraft plugin",
+  "authors": [
+    "LMBishop"
+  ],
+  "environment": "server",
+  "entrypoints": {
+    "server": [
+      "com.cssbham.cssminecraft.fabric.CSSMinecraftLoader"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.15.11",
+    "minecraft": "~1.21",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}

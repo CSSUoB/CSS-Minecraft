@@ -7,6 +7,8 @@ import club.minnced.discord.webhook.WebhookClient;
 import club.minnced.discord.webhook.WebhookClientBuilder;
 import okhttp3.OkHttpClient;
 
+import java.util.Objects;
+
 public class DiscordWebHookClient implements WebHookClient {
 
     private final String webHookUrl;
@@ -21,12 +23,31 @@ public class DiscordWebHookClient implements WebHookClient {
 
     @Override
     public void initialise() {
+        if (null != this.webhook) {
+            return;
+        }
+
         this.webhook = new WebhookClientBuilder(webHookUrl)
                 .setThreadFactory(Thread::new)
                 .setDaemon(true)
                 .setWait(true)
                 .setHttpClient(new OkHttpClient())
                 .build();
+    }
+
+    @Override
+    public void shutdown() {
+        if (null == this.webhook) {
+            return;
+        }
+
+        if (this.webhook.isShutdown()) {
+            this.webhook = null;
+            return;
+        }
+
+        this.webhook.close();
+        this.webhook = null;
     }
 
     @Override

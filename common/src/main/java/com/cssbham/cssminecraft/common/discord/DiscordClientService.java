@@ -45,6 +45,13 @@ public class DiscordClientService {
         this.webHookClient.initialise();
     }
 
+    public void shutdownClients() {
+        this.logger.info("Shutting down Discord clients");
+
+        this.discordClient.shutdown();
+        this.webHookClient.shutdown();
+    }
+
     public DiscordClient getDiscordClient() {
         Objects.requireNonNull(discordClient, "discord client not initialised");
 

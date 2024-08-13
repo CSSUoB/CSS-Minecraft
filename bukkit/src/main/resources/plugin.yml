@@ -1,9 +1,9 @@
 name: CSSMinecraft
 version: '${version}'
 main: com.cssbham.cssminecraft.bukkit.CSSMinecraftLoader
-api-version: 1.17
-prefix: CSS
+api-version: 1.21 # probably
 authors: [ RaineTheBoosted, LMBishop ]
 description: CSS' Minecraft plugin
 website: https://github.com/CSSUoB/CSS-Minecraft
-softdepend: [ LuckPerms ]
+softdepend: [ LuckPerms ] # TODO change back to depends
+# TODO re-implement commands

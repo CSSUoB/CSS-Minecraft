@@ -4,6 +4,7 @@ import com.cssbham.cssminecraft.common.event.Event;
 import com.cssbham.cssminecraft.common.event.EventBus;
 import com.cssbham.cssminecraft.common.event.PlatformEventAdapter;
 import com.cssbham.cssminecraft.common.event.events.ServerMessageEvent;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -46,7 +47,7 @@ public class BukkitEventListener implements Listener, PlatformEventAdapter {
         dispatchEvent(new ServerMessageEvent(
                 player.getUniqueId(),
                 player.getName(),
-                player.displayName().toString(),
+                componentToString(player.displayName()),
                 event.getMessage()
         ));
     }
@@ -58,7 +59,7 @@ public class BukkitEventListener implements Listener, PlatformEventAdapter {
         dispatchEvent(new com.cssbham.cssminecraft.common.event.events.PlayerJoinEvent(
                 player.getUniqueId(),
                 player.getName(),
-                PlainTextComponentSerializer.plainText().serialize(player.displayName()),
+                componentToString(player.displayName()),
                 plugin.getServer().getOnlinePlayers().size()
         ));
     }
@@ -70,9 +71,13 @@ public class BukkitEventListener implements Listener, PlatformEventAdapter {
         dispatchEvent(new com.cssbham.cssminecraft.common.event.events.PlayerQuitEvent(
                 player.getUniqueId(),
                 player.getName(),
-                PlainTextComponentSerializer.plainText().serialize(player.displayName()),
+                componentToString(player.displayName()),
                 plugin.getServer().getOnlinePlayers().size() - 1
         ));
+    }
+
+    private String componentToString(Component component) {
+        return PlainTextComponentSerializer.plainText().serialize(component);
     }
 
 }

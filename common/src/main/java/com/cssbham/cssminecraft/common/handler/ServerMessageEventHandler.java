@@ -15,6 +15,7 @@ public class ServerMessageEventHandler extends EventHandler<ServerMessageEvent> 
 
     @Override
     public void handle(ServerMessageEvent event) {
+        //TODO sanitise
         this.discordClientService.getWebHookClient().sendMessageAsMinecraftUser(event.username(), event.displayName(), event.message());
     }
 

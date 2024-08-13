@@ -20,7 +20,7 @@ public class CSSMinecraftLoader extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        super.onDisable();
+        plugin.disable();
     }
 
 }

@@ -6,6 +6,8 @@ public interface WebHookClient {
 
     void initialise();
 
+    void shutdown();
+
     void sendMessageAsMinecraftUser(String avatarName, String displayName, String message);
 
 }

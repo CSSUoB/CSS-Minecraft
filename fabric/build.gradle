@@ -1,0 +1,50 @@
+import net.fabricmc.loom.task.RemapJarTask
+
+plugins {
+    id 'fabric-loom' version '1.7-SNAPSHOT'
+    id 'java'
+}
+
+processResources {
+    duplicatesStrategy = duplicatesStrategy.INCLUDE
+    from(sourceSets.main.resources.srcDirs) {
+        include 'fabric.mod.json'
+        expand('version': project.version)
+    }
+}
+
+repositories {
+    maven { url = 'https://maven.fabricmc.net/' }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:1.21"
+    mappings "net.fabricmc:yarn:1.21.1+build.2:v2"
+    modImplementation "net.fabricmc:fabric-loader:0.15.11"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:0.100.3+1.21"
+
+    compileOnly 'net.kyori:adventure-text-serializer-gson:4.17.0'
+    implementation project(path: ':common', configuration: 'shadow')
+}
+
+shadowJar {
+    dependencies {
+        include(project(':common'))
+    }
+
+    archiveFileName = "cssminecraft-fabric-${project.version}-no-map.jar"
+}
+
+tasks.register('remapShadowJar', RemapJarTask) {
+    dependsOn tasks.shadowJar
+    input = tasks.shadowJar.archiveFile
+    addNestedDependencies = true
+    archiveFileName = "cssminecraft-fabric-${project.version}.jar"
+}
+
+tasks.assemble.dependsOn tasks.remapShadowJar
+
+artifacts {
+    archives remapShadowJar
+    shadow shadowJar
+}

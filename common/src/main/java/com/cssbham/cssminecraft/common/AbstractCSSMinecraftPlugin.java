@@ -46,6 +46,13 @@ public abstract class AbstractCSSMinecraftPlugin implements CSSMinecraftPlugin {
         eventBus.subscribe(DiscordMessageEvent.class, new DiscordMessageEventHandler(provideServerChatAdapter()));
     }
 
+    @Override
+    public void disable() {
+        if (null != discordClientService) {
+            discordClientService.shutdownClients();
+        }
+    }
+
     public ConfigService getConfigService() {
         return configService;
     }
