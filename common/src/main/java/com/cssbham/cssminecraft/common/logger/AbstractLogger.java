@@ -1,5 +1,10 @@
 package com.cssbham.cssminecraft.common.logger;
 
+/**
+ * Abstract implementation of logger, implementing the server logging
+ * level logic. Platform-specific implementations should wrap the server
+ * logger.
+ */
 public abstract class AbstractLogger implements Logger {
 
     private Logger.LoggingLevel serverLoggingLevel = LoggingLevel.INFO;

@@ -1,10 +1,11 @@
 package com.cssbham.cssminecraft.common;
 
 import com.cssbham.cssminecraft.common.adapter.ServerChatAdapter;
+import com.cssbham.cssminecraft.common.command.CommandService;
+import com.cssbham.cssminecraft.common.command.handler.MakeGreenCommandHandler;
 import com.cssbham.cssminecraft.common.config.ConfigService;
 import com.cssbham.cssminecraft.common.config.option.ConfigOption;
 import com.cssbham.cssminecraft.common.config.source.ConfigSource;
-import com.cssbham.cssminecraft.common.config.source.StubConfigSource;
 import com.cssbham.cssminecraft.common.config.source.YamlConfigSource;
 import com.cssbham.cssminecraft.common.discord.DiscordClientService;
 import com.cssbham.cssminecraft.common.event.EventBus;
@@ -13,6 +14,7 @@ import com.cssbham.cssminecraft.common.event.events.DiscordMessageEvent;
 import com.cssbham.cssminecraft.common.event.events.PlayerJoinEvent;
 import com.cssbham.cssminecraft.common.event.events.PlayerQuitEvent;
 import com.cssbham.cssminecraft.common.event.events.ServerMessageEvent;
+import com.cssbham.cssminecraft.common.executor.ServerExecutor;
 import com.cssbham.cssminecraft.common.handler.DiscordMessageEventHandler;
 import com.cssbham.cssminecraft.common.handler.PlayerJoinEventHandler;
 import com.cssbham.cssminecraft.common.handler.PlayerQuitEventHandler;
@@ -21,6 +23,10 @@ import com.cssbham.cssminecraft.common.logger.Logger;
 
 import java.nio.file.Path;
 
+/**
+ * Abstract implementation of the CSS Minecraft plugin, to be extended by
+ * platforms.
+ */
 public abstract class AbstractCSSMinecraftPlugin implements CSSMinecraftPlugin {
 
     private ConfigService configService;
@@ -47,6 +53,10 @@ public abstract class AbstractCSSMinecraftPlugin implements CSSMinecraftPlugin {
         eventBus.subscribe(PlayerJoinEvent.class, new PlayerJoinEventHandler(discordClientService));
         eventBus.subscribe(PlayerQuitEvent.class, new PlayerQuitEventHandler(discordClientService));
         eventBus.subscribe(DiscordMessageEvent.class, new DiscordMessageEventHandler(provideServerChatAdapter()));
+
+        CommandService commandService = provideCommandService();
+
+        commandService.register("makegreen", new MakeGreenCommandHandler(discordClientService), "mg", "green");
     }
 
     @Override
@@ -54,6 +64,8 @@ public abstract class AbstractCSSMinecraftPlugin implements CSSMinecraftPlugin {
         if (null != discordClientService) {
             discordClientService.shutdownClients();
         }
+
+        provideServerExecutor().shutdown();
     }
 
     public ConfigService getConfigService() {
@@ -68,8 +80,32 @@ public abstract class AbstractCSSMinecraftPlugin implements CSSMinecraftPlugin {
         return eventBus;
     }
 
+    /**
+     * Provide platform-specific {@link ServerChatAdapter}
+     *
+     * @return a server chat adapter wrapping platform chat functions
+     */
     public abstract ServerChatAdapter provideServerChatAdapter();
 
+    /**
+     * Provide configuration path
+     *
+     * @return path to config file
+     */
     public abstract Path provideConfigurationPath();
+
+    /**
+     * Provide platform-specific {@link ServerExecutor}
+     *
+     * @return a server executor wrapping the platform main thread
+     */
+    public abstract ServerExecutor provideServerExecutor();
+
+    /**
+     * Provide platform-specific {@link CommandService}
+     *
+     * @return a command service
+     */
+    public abstract CommandService provideCommandService();
 
 }

@@ -6,4 +6,8 @@ authors: [ RaineTheBoosted, LMBishop ]
 description: CSS' Minecraft plugin
 website: https://github.com/CSSUoB/CSS-Minecraft
 softdepend: [ LuckPerms ] # TODO change back to depends
-# TODO re-implement commands
+commands:
+  makegreen:
+    description: Make yourself green by verifying your CSS membership.
+    usage: /<command> [Discord Username]
+    aliases: [ mg, green ]

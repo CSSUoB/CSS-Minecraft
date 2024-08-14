@@ -4,6 +4,9 @@ import com.cssbham.cssminecraft.common.logger.Logger;
 
 import java.util.*;
 
+/**
+ * A simple event bus implementation.
+ */
 public class SimpleEventBus implements EventBus {
 
     private final Map<Class<?>, List<EventHandler<?>>> handlers = new HashMap<>();
@@ -21,7 +24,7 @@ public class SimpleEventBus implements EventBus {
             try {
                 handler.handle(event);
             } catch (Exception e) {
-                // TODO handle
+                logger.severe(String.format("Error in handler %s", handler.getClass().getName()));
             }
         }
     }

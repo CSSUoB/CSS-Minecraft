@@ -1,5 +1,8 @@
 package com.cssbham.cssminecraft.common.config.option;
 
+/**
+ * Factory methods for creating config values.
+ */
 public final class ConfigValueFactory {
 
     private ConfigValueFactory() {}

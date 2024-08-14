@@ -12,6 +12,9 @@ import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Config source implementation for SnakeYAML.
+ */
 public class YamlConfigSource implements ConfigSource {
 
     private final Path configurationPath;

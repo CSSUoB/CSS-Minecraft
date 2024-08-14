@@ -11,6 +11,9 @@ import com.cssbham.cssminecraft.common.logger.Logger;
 
 import java.util.Objects;
 
+/**
+ * A service to manage Discord clients.
+ */
 public class DiscordClientService {
 
     private final ConfigService configService;
@@ -26,6 +29,9 @@ public class DiscordClientService {
         this.logger = logger;
     }
 
+    /**
+     * Initialise Discord clients. Will throw if underlying clients throw.
+     */
     public void initialiseClients() {
         this.discordClient = new JDADiscordClient(
                 eventBus,
@@ -46,6 +52,9 @@ public class DiscordClientService {
         this.webHookClient.initialise();
     }
 
+    /**
+     * Shutdown Discord clients.
+     */
     public void shutdownClients() {
         this.logger.info("Shutting down Discord clients");
 

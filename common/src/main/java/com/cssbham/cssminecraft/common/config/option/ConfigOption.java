@@ -7,6 +7,9 @@ import java.util.stream.Collectors;
 
 import static com.cssbham.cssminecraft.common.config.option.ConfigValueFactory.*;
 
+/**
+ * A list of all config options.
+ */
 public class ConfigOption {
 
     public static final ConfigValue<String> WEBHOOK_URL = buildString("webhook-url", "");
