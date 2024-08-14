@@ -29,6 +29,7 @@ public class DiscordClientService {
     public void initialiseClients() {
         this.discordClient = new JDADiscordClient(
                 eventBus,
+                logger,
                 configService.getValue(ConfigOption.BOT_TOKEN),
                 configService.getValue(ConfigOption.DISCORD_SERVER_ID),
                 configService.getValue(ConfigOption.MEMBER_ROLE_ID),

@@ -21,6 +21,8 @@ public class ConfigOption {
 
     public static final ConfigValue<Long> DISCORD_SERVER_ID = buildLong("discord-server-id", 0);
 
+    public static final ConfigValue<Integer> LOGGING_LEVEL = buildInt("logging-level", 2);
+
     public static List<ConfigValue<?>> allValues() {
         return Arrays.stream(ConfigOption.class.getFields())
                 .filter(f -> Modifier.isStatic(f.getModifiers()))

@@ -12,4 +12,8 @@ public final class ConfigValueFactory {
         return new ConfigValue<>(path, def, (configSource -> configSource.getLong(path, def)));
     }
 
+    public static ConfigValue<Integer> buildInt(String path, int def) {
+        return new ConfigValue<>(path, def, (configSource -> configSource.getInteger(path, def)));
+    }
+
 }

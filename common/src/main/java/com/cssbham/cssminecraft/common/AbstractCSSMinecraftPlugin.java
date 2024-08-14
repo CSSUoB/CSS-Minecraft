@@ -2,6 +2,7 @@ package com.cssbham.cssminecraft.common;
 
 import com.cssbham.cssminecraft.common.adapter.ServerChatAdapter;
 import com.cssbham.cssminecraft.common.config.ConfigService;
+import com.cssbham.cssminecraft.common.config.option.ConfigOption;
 import com.cssbham.cssminecraft.common.config.source.ConfigSource;
 import com.cssbham.cssminecraft.common.config.source.StubConfigSource;
 import com.cssbham.cssminecraft.common.config.source.YamlConfigSource;
@@ -35,7 +36,9 @@ public abstract class AbstractCSSMinecraftPlugin implements CSSMinecraftPlugin {
         this.configService = new ConfigService(logger);
         configService.useSource(configSource);
 
-        this.eventBus = new SimpleEventBus();
+        logger.setServerLoggingLevel(Logger.LoggingLevel.fromNumber(configService.getValue(ConfigOption.LOGGING_LEVEL)));
+
+        this.eventBus = new SimpleEventBus(logger);
 
         this.discordClientService = new DiscordClientService(configService, eventBus, logger);
         discordClientService.initialiseClients();
