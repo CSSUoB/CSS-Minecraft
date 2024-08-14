@@ -7,7 +7,7 @@ showAsResourcePack=false
 [[mods]]
 modId="cssminecraft"
 version="${version}"
-displayName="CSS Minecraft"
+displayName="CSSMinecraft"
 logoFile="logo.png"
 authors="LMBishop"
 description='''

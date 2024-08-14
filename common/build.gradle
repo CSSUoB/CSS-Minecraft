@@ -1,43 +1,35 @@
 plugins {
-    id 'java'
-    id 'java-library'
+    id "java"
+    id "java-library"
 }
 
 dependencies {
-    implementation ('net.dv8tion:JDA:5.0.2') {
-        exclude(module: 'opus-java')
-        exclude(module: 'annotations')
+    implementation ("net.dv8tion:JDA:5.0.2") {
+        exclude(module: "opus-java")
+        exclude(module: "annotations")
     }
-    implementation 'club.minnced:discord-webhooks:0.8.4'
-    implementation 'org.yaml:snakeyaml:2.2'
+    implementation "club.minnced:discord-webhooks:0.8.4"
+    implementation "org.yaml:snakeyaml:2.2"
 
-    api ('net.kyori:adventure-api:4.17.0') {
-        exclude(module: 'adventure-bom')
-        exclude(module: 'annotations')
-    }
-    api ('net.kyori:adventure-text-serializer-plain:4.17.0') {
-        exclude(module: 'adventure-bom')
-        exclude(module: 'adventure-api')
-    }
-    api ('net.kyori:adventure-text-serializer-gson:4.17.0') {
-        exclude(module: 'adventure-bom')
-        exclude(module: 'adventure-api')
-        exclude(module: 'annotations')
-        exclude(module: 'gson')
-    }
+    compileOnly "net.kyori:adventure-api:4.17.0"
 }
 
 shadowJar {
-    relocate 'club.minnced', 'com.cssbham.cssminecraft.lib.discordwebhooks'
-    relocate 'com.iwebpp.crypto', 'com.cssbham.cssminecraft.lib.iwebppcrypto'
-    relocate 'com.neovisionaries.ws', 'com.cssbham.cssminecraft.lib.nvws'
-    relocate 'net.dv8tion.jda', 'com.cssbham.cssminecraft.lib.jda'
-    relocate 'okhttp3', 'com.cssbham.cssminecraft.lib.okhttp3'
-    relocate 'okio', 'com.cssbham.cssminecraft.lib.okio'
-    relocate 'org.apache.commons.collections4', 'com.cssbham.cssminecraft.lib.collections4'
-    relocate 'org.slf4j', 'com.cssbham.cssminecraft.lib.slf4j'
-    relocate 'org.yaml.snakeyaml', 'com.cssbham.cssminecraft.lib.snakeyaml'
-    relocate 'kotlin', 'com.cssbham.cssminecraft.lib.kotlin'
+    relocate "club.minnced", "com.cssbham.cssminecraft.lib.discordwebhooks"
+    relocate "com.fasterxml.jackson", "com.cssbham.cssminecraft.lib.jackson"
+    relocate "com.iwebpp.crypto", "com.cssbham.cssminecraft.lib.iwebppcrypto"
+    relocate "com.neovisionaries.ws", "com.cssbham.cssminecraft.lib.nvws"
+    relocate "gnu.trove", "com.cssbham.cssminecraft.lib.trove"
+    relocate "net.dv8tion.jda", "com.cssbham.cssminecraft.lib.jda"
+    relocate "okhttp3", "com.cssbham.cssminecraft.lib.okhttp3"
+    relocate "okio", "com.cssbham.cssminecraft.lib.okio"
+    relocate "org.apache.commons.collections4", "com.cssbham.cssminecraft.lib.collections4"
+    relocate "org.slf4j", "com.cssbham.cssminecraft.lib.slf4j"
+    relocate "org.yaml.snakeyaml", "com.cssbham.cssminecraft.lib.snakeyaml"
+    relocate "org.intellij.lang.annotations", "com.cssbham.cssminecraft.lib.annotations.intellij"
+    relocate "org.jetbrains.annotations", "com.cssbham.cssminecraft.lib.annotations.jetbrains"
+    relocate "org.json", "com.cssbham.cssminecraft.lib.json"
+    relocate "kotlin", "com.cssbham.cssminecraft.lib.kotlin"
 
     minimize()
 }

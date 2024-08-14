@@ -1,16 +1,16 @@
 pluginManagement {
     repositories {
         gradlePluginPortal()
-        maven { url = 'https://maven.fabricmc.net/' }
-        maven { url = 'https://maven.minecraftforge.net/' }
+        maven { url = "https://maven.fabricmc.net/" }
+        maven { url = "https://maven.minecraftforge.net/" }
     }
 }
 
-rootProject.name = 'css-minecraft'
+rootProject.name = "css-minecraft"
 
 include(
-        'common',
-        'bukkit',
-        'fabric',
-        'forge'
+        "common",
+        "bukkit",
+        "fabric",
+        "forge"
 )

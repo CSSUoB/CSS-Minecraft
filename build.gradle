@@ -1,24 +1,24 @@
 plugins {
-    id 'java'
-    id 'com.gradleup.shadow' version '8.3.0'
+    id "java"
+    id "com.gradleup.shadow" version "8.3.0"
 }
 
 subprojects {
-    apply plugin: 'java'
-    apply plugin: 'com.gradleup.shadow'
+    apply plugin: "java"
+    apply plugin: "com.gradleup.shadow"
 
-    group = 'com.cssbham'
-    version = '1.0.0'
+    group = "com.cssbham"
+    version = "1.0.0"
 
     sourceCompatibility = 21
     targetCompatibility = 21
 
     tasks.withType(JavaCompile) {
-        options.encoding = 'UTF-8'
+        options.encoding = "UTF-8"
     }
 
     tasks.withType(Javadoc) {
-        options.encoding = 'UTF-8'
+        options.encoding = "UTF-8"
     }
 
     repositories {
@@ -27,4 +27,3 @@ subprojects {
 
     assemble.dependsOn shadowJar
 }
-

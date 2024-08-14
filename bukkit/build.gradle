@@ -1,28 +1,31 @@
 plugins {
-    id 'java'
+    id "java"
 }
 
 processResources {
     duplicatesStrategy = duplicatesStrategy.INCLUDE
     from(sourceSets.main.resources.srcDirs) {
-        include 'plugin.yml'
-        expand('version': project.version)
+        include "plugin.yml"
+        expand("version": project.version)
     }
 }
 
 repositories {
-    maven { url = 'https://repo.papermc.io/repository/maven-public/' }
-
-    maven { url = 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
+    maven { url = "https://repo.papermc.io/repository/maven-public/" }
 }
 
 dependencies {
-    implementation project(':common')
+    compileOnly "io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT"
 
-    compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
+    implementation project(path: ":common", configuration: "shadow")
 }
 
 shadowJar {
+    dependencies {
+        include(project(":common"))
+    }
+
     archiveFileName = "cssminecraft-bukkit-${project.version}.jar"
-    //TODO unfuck relocating
+
+    minimize()
 }
