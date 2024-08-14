@@ -5,6 +5,9 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerPlayer;
+
+import java.util.UUID;
 
 public class ForgeServerChatAdapter implements ServerChatAdapter {
 
@@ -17,6 +20,19 @@ public class ForgeServerChatAdapter implements ServerChatAdapter {
     @Override
     public void broadcastMessage(Component message) {
         server.getPlayerList().broadcastSystemMessage(componentToMinecraftComponent(message), false);
+    }
+
+    @Override
+    public void sendMessageToPlayer(UUID user, Component component) {
+        ServerPlayer player = server.getPlayerList().getPlayer(user);
+        if (null != player) {
+            player.sendSystemMessage(componentToMinecraftComponent(component));
+        }
+    }
+
+    @Override
+    public void sendMessageToConsole(Component component) {
+        server.sendSystemMessage(componentToMinecraftComponent(component));
     }
 
     public net.minecraft.network.chat.Component componentToMinecraftComponent(Component component) {

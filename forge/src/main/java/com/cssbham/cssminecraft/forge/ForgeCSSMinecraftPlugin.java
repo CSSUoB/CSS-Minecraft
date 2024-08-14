@@ -1,6 +1,10 @@
 package com.cssbham.cssminecraft.forge;
 
+import com.cssbham.cssminecraft.common.command.CommandService;
+import com.cssbham.cssminecraft.common.executor.ServerExecutor;
 import com.cssbham.cssminecraft.forge.adapter.ForgeServerChatAdapter;
+import com.cssbham.cssminecraft.forge.command.ForgeCommandService;
+import com.cssbham.cssminecraft.forge.executor.ForgeServerExecutor;
 import com.cssbham.cssminecraft.forge.listener.ForgeEventAdapter;
 import com.cssbham.cssminecraft.forge.logger.ForgeLogger;
 import com.cssbham.cssminecraft.common.AbstractCSSMinecraftPlugin;
@@ -21,6 +25,8 @@ public class ForgeCSSMinecraftPlugin extends AbstractCSSMinecraftPlugin {
     private ForgeServerChatAdapter serverChatAdapter;
 
     private MinecraftServer server;
+    private ForgeServerExecutor executor;
+    private ForgeCommandService commandService;
 
     public ForgeCSSMinecraftPlugin() {
         this.logger = new ForgeLogger(MOD_ID);
@@ -29,6 +35,8 @@ public class ForgeCSSMinecraftPlugin extends AbstractCSSMinecraftPlugin {
     @Override
     public void enable() {
         this.serverChatAdapter = new ForgeServerChatAdapter(server);
+        this.executor = new ForgeServerExecutor(logger, server);
+        this.commandService = new ForgeCommandService(logger, executor, serverChatAdapter, server);
 
         super.enable();
 
@@ -49,6 +57,16 @@ public class ForgeCSSMinecraftPlugin extends AbstractCSSMinecraftPlugin {
     @Override
     public Path provideConfigurationPath() {
         return FMLPaths.CONFIGDIR.get().resolve(MOD_ID).resolve("config.yml");
+    }
+
+    @Override
+    public ServerExecutor provideServerExecutor() {
+        return executor;
+    }
+
+    @Override
+    public CommandService provideCommandService() {
+        return commandService;
     }
 
     public void setServer(MinecraftServer server) {
