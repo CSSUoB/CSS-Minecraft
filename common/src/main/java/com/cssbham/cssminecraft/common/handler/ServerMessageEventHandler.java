@@ -4,6 +4,7 @@ import com.cssbham.cssminecraft.common.discord.DiscordClientService;
 import com.cssbham.cssminecraft.common.event.Event;
 import com.cssbham.cssminecraft.common.event.EventHandler;
 import com.cssbham.cssminecraft.common.event.events.ServerMessageEvent;
+import net.dv8tion.jda.api.utils.MarkdownSanitizer;
 
 public class ServerMessageEventHandler extends EventHandler<ServerMessageEvent> {
 
@@ -15,8 +16,8 @@ public class ServerMessageEventHandler extends EventHandler<ServerMessageEvent> 
 
     @Override
     public void handle(ServerMessageEvent event) {
-        //TODO sanitise
-        this.discordClientService.getWebHookClient().sendMessageAsMinecraftUser(event.username(), event.displayName(), event.message());
+        String sanitisedMessage = MarkdownSanitizer.sanitize(event.message()).replace("@", "@\u200B");
+        this.discordClientService.getWebHookClient().sendMessageAsMinecraftUser(event.username(), event.displayName(), sanitisedMessage);
     }
 
 }
