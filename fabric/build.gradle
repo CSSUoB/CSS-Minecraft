@@ -33,6 +33,8 @@ shadowJar {
         include(project(":common"))
     }
 
+    exclude "/mappings/*"
+
     archiveFileName = "cssminecraft-fabric-${project.version}-no-map.jar"
 }
 

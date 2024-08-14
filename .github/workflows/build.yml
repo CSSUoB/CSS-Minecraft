@@ -13,7 +13,7 @@ jobs:
       matrix:
         target: [ bukkit, fabric, forge ]
 
-    name: Build target ${{ matrix.target }}
+    name: Build ${{ matrix.target }}
     runs-on: ubuntu-latest
     if: "!startsWith(github.event.commits[0].message, '[ci-skip]')"
 
