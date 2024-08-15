@@ -47,7 +47,12 @@ public abstract class AbstractCSSMinecraftPlugin implements CSSMinecraftPlugin {
         this.eventBus = new SimpleEventBus(logger);
 
         this.discordClientService = new DiscordClientService(configService, eventBus, logger);
-        discordClientService.initialiseClients();
+        try {
+            discordClientService.initialiseClients();
+        } catch (Exception e) {
+            logger.severe(String.format("Failed to initialise Discord clients: %s", e.getMessage()));
+            throw e;
+        }
 
         eventBus.subscribe(ServerMessageEvent.class, new ServerMessageEventHandler(discordClientService));
         eventBus.subscribe(PlayerJoinEvent.class, new PlayerJoinEventHandler(discordClientService));

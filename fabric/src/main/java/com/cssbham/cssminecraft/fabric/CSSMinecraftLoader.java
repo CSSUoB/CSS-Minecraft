@@ -23,7 +23,12 @@ public class CSSMinecraftLoader implements DedicatedServerModInitializer {
 
     private void onStart(MinecraftServer server) {
         this.plugin.setServer(server);
-        this.plugin.enable();
+        try {
+            this.plugin.enable();
+        } catch (Exception e) {
+            this.plugin.getLogger().severe("Mod initialisation failed - disabling");
+            this.plugin.disable();
+        }
     }
 
     private void onStop(MinecraftServer server) {

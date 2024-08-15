@@ -1,7 +1,8 @@
 package com.cssbham.cssminecraft.forge;
 
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.server.ServerStartedEvent;
+import net.minecraftforge.event.server.ServerStartingEvent;
+import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.fml.common.Mod;
 
 /**
@@ -17,9 +18,18 @@ public class CSSMinecraftLoader {
         MinecraftForge.EVENT_BUS.addListener(this::onServerStarted);
     }
 
-    public void onServerStarted(ServerStartedEvent event) {
+    public void onServerStarted(ServerStartingEvent event) {
         this.plugin.setServer(event.getServer());
-        this.plugin.enable();
+        try {
+            this.plugin.enable();
+        } catch (Exception e) {
+            this.plugin.getLogger().severe("Mod initialisation failed - disabling");
+            this.plugin.disable();
+        }
+    }
+
+    public void onServerStopping(ServerStoppingEvent event) {
+        this.plugin.disable();
     }
 
 }

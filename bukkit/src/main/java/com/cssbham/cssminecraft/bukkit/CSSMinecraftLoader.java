@@ -1,5 +1,6 @@
 package com.cssbham.cssminecraft.bukkit;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -15,7 +16,12 @@ public class CSSMinecraftLoader extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        plugin.enable();
+        try {
+            plugin.enable();
+        } catch (Exception e) {
+            plugin.getLogger().severe("Plugin initialisation failed - disabling");
+            Bukkit.getPluginManager().disablePlugin(this);
+        }
     }
 
     @Override
