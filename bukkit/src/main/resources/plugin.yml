@@ -5,7 +5,7 @@ api-version: 1.21 # probably
 authors: [ RaineTheBoosted, LMBishop ]
 description: CSS' Minecraft plugin
 website: https://github.com/CSSUoB/CSS-Minecraft
-softdepend: [ LuckPerms ] # TODO change back to depends
+softdepend: [ LuckPerms ]
 commands:
   makegreen:
     description: Make yourself green by verifying your CSS membership.

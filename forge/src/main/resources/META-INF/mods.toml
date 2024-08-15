@@ -13,3 +13,10 @@ authors="LMBishop"
 description='''
   CSS' Minecraft plugin
   '''
+
+[[dependencies.luckperms]]
+modId="luckperms"
+mandatory=false
+versionRange=""
+ordering="AFTER"
+side="SERVER"

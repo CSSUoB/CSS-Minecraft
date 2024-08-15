@@ -64,7 +64,7 @@ public class ForgeEventAdapter implements PlatformEventAdapter {
                 player.getUUID(),
                 name,
                 (null == player.getDisplayName()) ? name : player.getDisplayName().getString(),
-                server.getPlayerCount() + 1
+                server.getPlayerCount()
         ));
     }
 
