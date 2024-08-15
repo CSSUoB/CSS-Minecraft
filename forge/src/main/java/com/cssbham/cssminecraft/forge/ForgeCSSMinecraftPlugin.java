@@ -40,7 +40,7 @@ public class ForgeCSSMinecraftPlugin extends AbstractCSSMinecraftPlugin {
 
         super.enable();
 
-        ForgeEventAdapter eventAdapter = new ForgeEventAdapter();
+        ForgeEventAdapter eventAdapter = new ForgeEventAdapter(server, executor);
         eventAdapter.bindPlatformToEventBus(super.getEventBus());
     }
 

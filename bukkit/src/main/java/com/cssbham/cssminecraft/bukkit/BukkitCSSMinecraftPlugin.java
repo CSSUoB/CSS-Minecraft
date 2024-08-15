@@ -7,7 +7,6 @@ import com.cssbham.cssminecraft.bukkit.listener.BukkitEventListener;
 import com.cssbham.cssminecraft.bukkit.logger.BukkitLogger;
 import com.cssbham.cssminecraft.common.AbstractCSSMinecraftPlugin;
 import com.cssbham.cssminecraft.common.adapter.ServerChatAdapter;
-import com.cssbham.cssminecraft.common.command.CommandSender;
 import com.cssbham.cssminecraft.common.command.CommandService;
 import com.cssbham.cssminecraft.common.executor.ServerExecutor;
 import com.cssbham.cssminecraft.common.logger.Logger;
@@ -39,7 +38,7 @@ public class BukkitCSSMinecraftPlugin extends AbstractCSSMinecraftPlugin {
     public void enable() {
         super.enable();
 
-        BukkitEventListener eventListener = new BukkitEventListener(plugin);
+        BukkitEventListener eventListener = new BukkitEventListener(plugin, executor);
         eventListener.bindPlatformToEventBus(super.getEventBus());
 
         plugin.getCommand("makegreen").setExecutor(commandService);

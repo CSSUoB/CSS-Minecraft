@@ -40,7 +40,7 @@ public class FabricCSSMinecraftPlugin extends AbstractCSSMinecraftPlugin {
 
         super.enable();
 
-        FabricEventAdapter eventAdapter = new FabricEventAdapter();
+        FabricEventAdapter eventAdapter = new FabricEventAdapter(executor);
         eventAdapter.bindPlatformToEventBus(super.getEventBus());
     }
 

@@ -4,6 +4,7 @@ import com.cssbham.cssminecraft.common.event.Event;
 import com.cssbham.cssminecraft.common.event.EventBus;
 import com.cssbham.cssminecraft.common.event.PlatformEventAdapter;
 import com.cssbham.cssminecraft.common.event.events.ServerMessageEvent;
+import com.cssbham.cssminecraft.common.executor.ServerExecutor;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.entity.Player;
@@ -19,10 +20,12 @@ import java.util.Objects;
 public class BukkitEventListener implements Listener, PlatformEventAdapter {
 
     private final JavaPlugin plugin;
+    private final ServerExecutor executor;
     private EventBus eventBus;
 
-    public BukkitEventListener(JavaPlugin plugin) {
+    public BukkitEventListener(JavaPlugin plugin, ServerExecutor executor) {
         this.plugin = plugin;
+        this.executor = executor;
     }
 
     @Override
@@ -35,9 +38,7 @@ public class BukkitEventListener implements Listener, PlatformEventAdapter {
     private void dispatchEvent(Event event) {
         Objects.requireNonNull(event, "event bus not bound");
 
-        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
-            eventBus.dispatch(event);
-        });
+        executor.doAsync(() -> eventBus.dispatch(event));
     }
 
     @EventHandler
