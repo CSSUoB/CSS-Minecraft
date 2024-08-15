@@ -14,7 +14,7 @@ description='''
   CSS' Minecraft plugin
   '''
 
-[[dependencies.luckperms]]
+[[dependencies.cssminecraft]]
 modId="luckperms"
 mandatory=false
 versionRange=""
