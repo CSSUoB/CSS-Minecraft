@@ -5,32 +5,25 @@ import com.cssbham.cssminecraft.common.event.EventBus;
 import com.cssbham.cssminecraft.common.event.PlatformEventAdapter;
 import com.cssbham.cssminecraft.common.event.events.PlayerJoinEvent;
 import com.cssbham.cssminecraft.common.event.events.PlayerQuitEvent;
-import com.cssbham.cssminecraft.common.event.events.ServerMessageEvent;
 import com.cssbham.cssminecraft.common.executor.ServerExecutor;
-import net.fabricmc.fabric.api.message.v1.ServerMessageEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 public class FabricEventAdapter implements PlatformEventAdapter {
 
-    private final ServerExecutor executor;
+    public static EventBus EVENT_BUS;
+    public static ServerExecutor EXECUTOR;
 
     public FabricEventAdapter(ServerExecutor executor) {
-        this.executor = executor;
+        if (null != EXECUTOR) {
+            throw new IllegalStateException("singleton created twice");
+        }
+        EXECUTOR = executor;
     }
 
     @Override
     public void bindPlatformToEventBus(EventBus eventBus) {
-        ServerMessageEvents.CHAT_MESSAGE.register((message, player, parameters) -> {
-            String name = player.getName().getString();
-
-            dispatchEvent(eventBus, new ServerMessageEvent(
-                    player.getUuid(),
-                    player.getName().getString(),
-                    (null == player.getDisplayName()) ? name : player.getDisplayName().getString(),
-                    message.getSignedContent()
-            ));
-        });
+        FabricEventAdapter.EVENT_BUS = eventBus;
 
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
             ServerPlayerEntity player = handler.getPlayer();
@@ -57,7 +50,7 @@ public class FabricEventAdapter implements PlatformEventAdapter {
         });
     }
 
-    private void dispatchEvent(EventBus eventBus, Event event) {
-        executor.doAsync(() -> eventBus.dispatch(event));
+    public static void dispatchEvent(EventBus eventBus, Event event) {
+        EXECUTOR.doAsync(() -> eventBus.dispatch(event));
     }
 }

@@ -48,10 +48,11 @@ public class FabricCommandService extends AbstractCommandService {
     }
 
     private CommandSender getCommandSenderForSource(ServerCommandSource source) {
-        if (source.isExecutedByPlayer()) {
+        if (source.getEntity() instanceof ServerPlayerEntity) {
+            ServerPlayerEntity player = (ServerPlayerEntity) source.getEntity();
             return new CommandSender(
                     chatAdapter,
-                    source.getPlayer().getUuid(),
+                    player.getUuid(),
                     source.getName(),
                     false
             );

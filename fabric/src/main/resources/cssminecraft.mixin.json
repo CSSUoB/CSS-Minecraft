@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "com.cssbham.cssminecraft.fabric.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "ServerPlayNetworkHandlerMixin"
+  ],
+  "client": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -59,6 +59,7 @@ public class DiscordWebHookClient implements WebHookClient {
                     .setContent(message)
                     .build());
         } catch (Exception ignored) {
+            ignored.printStackTrace();
         }
         // https://github.com/DV8FromTheWorld/JDA/issues/1761
     }
