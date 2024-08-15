@@ -4,21 +4,31 @@ import com.cssbham.cssminecraft.common.command.CommandContext;
 import com.cssbham.cssminecraft.common.command.CommandHandler;
 import com.cssbham.cssminecraft.common.command.CommandSender;
 import com.cssbham.cssminecraft.common.discord.DiscordClientService;
+import com.cssbham.cssminecraft.common.permission.PermissionPluginService;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 
+import java.util.concurrent.ExecutionException;
+
 public class MakeGreenCommandHandler implements CommandHandler {
 
     private final DiscordClientService discordClientService;
+    private final PermissionPluginService permissionPluginService;
 
-    public MakeGreenCommandHandler(DiscordClientService discordClientService) {
+    public MakeGreenCommandHandler(DiscordClientService discordClientService, PermissionPluginService permissionPluginService) {
         this.discordClientService = discordClientService;
+        this.permissionPluginService = permissionPluginService;
     }
 
     @Override
     public void handle(CommandSender sender, CommandContext context) {
+        if (!permissionPluginService.isAvailable()) {
+            sender.sendMessage(Component.text("There is no permissions plugin available.").color(NamedTextColor.RED));
+            return;
+        }
+
         if (sender.isConsole()) {
             sender.sendMessage(Component.text("Only players may use this command.").color(NamedTextColor.RED));
             return;
@@ -31,7 +41,14 @@ public class MakeGreenCommandHandler implements CommandHandler {
         }
 
         if (discordClientService.getDiscordClient().isMember(arg)) {
-            //TODO the luckperms stuff
+            sender.sendMessage(Component.text("Making you green...").color(NamedTextColor.GRAY));
+            try {
+                permissionPluginService.grantMemberRole(sender.getUuid()).get();
+            } catch (InterruptedException | ExecutionException e) {
+                sender.sendMessage(Component.text("There was a problem making you green. Try again later.")
+                        .color(NamedTextColor.RED));
+                throw new RuntimeException(e);
+            }
             sender.sendMessage(Component.text("Congratulations, you are now green!").color(NamedTextColor.GREEN));
         } else {
             sender.sendMessage(Component.text("You don't appear to be a ").color(NamedTextColor.RED).append(

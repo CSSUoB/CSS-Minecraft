@@ -12,6 +12,7 @@ dependencies {
     implementation "org.yaml:snakeyaml:2.2"
 
     compileOnly "net.kyori:adventure-api:4.17.0"
+    compileOnly "net.luckperms:api:5.4"
 }
 
 shadowJar {

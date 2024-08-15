@@ -20,6 +20,8 @@ import com.cssbham.cssminecraft.common.handler.PlayerJoinEventHandler;
 import com.cssbham.cssminecraft.common.handler.PlayerQuitEventHandler;
 import com.cssbham.cssminecraft.common.handler.ServerMessageEventHandler;
 import com.cssbham.cssminecraft.common.logger.Logger;
+import com.cssbham.cssminecraft.common.permission.PermissionPluginService;
+import com.cssbham.cssminecraft.common.permission.PermissionPluginServiceFactory;
 
 import java.nio.file.Path;
 
@@ -59,9 +61,10 @@ public abstract class AbstractCSSMinecraftPlugin implements CSSMinecraftPlugin {
         eventBus.subscribe(PlayerQuitEvent.class, new PlayerQuitEventHandler(discordClientService));
         eventBus.subscribe(DiscordMessageEvent.class, new DiscordMessageEventHandler(provideServerChatAdapter()));
 
+        PermissionPluginService permissionPluginService = PermissionPluginServiceFactory.any();
         CommandService commandService = provideCommandService();
 
-        commandService.register("makegreen", new MakeGreenCommandHandler(discordClientService), "mg", "green");
+        commandService.register("makegreen", new MakeGreenCommandHandler(discordClientService, permissionPluginService), "mg", "green");
     }
 
     @Override
