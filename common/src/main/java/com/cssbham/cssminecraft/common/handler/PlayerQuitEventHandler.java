@@ -5,7 +5,7 @@ import com.cssbham.cssminecraft.common.event.EventHandler;
 import com.cssbham.cssminecraft.common.event.events.PlayerJoinEvent;
 import com.cssbham.cssminecraft.common.event.events.PlayerQuitEvent;
 
-public class PlayerQuitEventHandler extends EventHandler<PlayerQuitEvent> {
+public class PlayerQuitEventHandler extends AbstractPlayerJoinLeaveEventHandler<PlayerQuitEvent> {
 
     private final DiscordClientService discordClientService;
 
@@ -15,8 +15,7 @@ public class PlayerQuitEventHandler extends EventHandler<PlayerQuitEvent> {
 
     @Override
     public void handle(PlayerQuitEvent event) {
-        String joinMessage = String.format("__*has left the server, there are now %d players online*__",
-                event.newPlayerCount());
+        String joinMessage = String.format("__*has left the server, %s*__", getPlayerCountMessage(event.newPlayerCount()));
         this.discordClientService.getWebHookClient().sendMessageAsMinecraftUser(event.username(), event.displayName(), joinMessage);
     }
 

@@ -5,7 +5,7 @@ import com.cssbham.cssminecraft.common.event.EventHandler;
 import com.cssbham.cssminecraft.common.event.events.PlayerJoinEvent;
 import com.cssbham.cssminecraft.common.event.events.ServerMessageEvent;
 
-public class PlayerJoinEventHandler extends EventHandler<PlayerJoinEvent> {
+public class PlayerJoinEventHandler extends AbstractPlayerJoinLeaveEventHandler<PlayerJoinEvent> {
 
     private final DiscordClientService discordClientService;
 
@@ -15,8 +15,7 @@ public class PlayerJoinEventHandler extends EventHandler<PlayerJoinEvent> {
 
     @Override
     public void handle(PlayerJoinEvent event) {
-        String joinMessage = String.format("__*has joined the server, there are now %d players online*__",
-                event.newPlayerCount());
+        String joinMessage = String.format("__*has joined the server, %s*__", getPlayerCountMessage(event.newPlayerCount()));
         this.discordClientService.getWebHookClient().sendMessageAsMinecraftUser(event.username(), event.displayName(), joinMessage);
     }
 
