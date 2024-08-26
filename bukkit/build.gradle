@@ -25,7 +25,8 @@ shadowJar {
         include(project(":common"))
     }
 
-    archiveFileName = "cssminecraft-bukkit-${project.version}.jar"
+    // archiveFileName = "cssminecraft-bukkit-${project.version}.jar"
+
 
     minimize()
 }

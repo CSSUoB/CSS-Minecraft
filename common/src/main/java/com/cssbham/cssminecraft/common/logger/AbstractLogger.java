@@ -25,10 +25,17 @@ public abstract class AbstractLogger implements Logger {
             return;
         }
         switch (level) {
-            case DEBUG -> logInfo("DEBUG: " + str);
-            case INFO -> logInfo(str);
-            case ERROR -> logError(str);
-            case WARNING -> logWarning(str);
+            case DEBUG:
+                logInfo("DEBUG: " + str);
+                return;
+            case INFO:
+                logInfo(str);
+                return;
+            case ERROR:
+                logError(str);
+                return;
+            case WARNING:
+                logWarning(str);
         }
     }
 

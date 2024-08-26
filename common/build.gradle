@@ -4,11 +4,11 @@ plugins {
 }
 
 dependencies {
+    implementation "club.minnced:discord-webhooks:0.8.4"
     implementation ("net.dv8tion:JDA:5.0.2") {
         exclude(module: "opus-java")
         exclude(module: "annotations")
     }
-    implementation "club.minnced:discord-webhooks:0.8.4"
     implementation "org.yaml:snakeyaml:2.2"
 
     compileOnly "net.kyori:adventure-api:4.17.0"

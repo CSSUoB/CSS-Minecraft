@@ -15,8 +15,8 @@ public class PlayerQuitEventHandler extends AbstractPlayerJoinLeaveEventHandler<
 
     @Override
     public void handle(PlayerQuitEvent event) {
-        String joinMessage = String.format("__*has left the server, %s*__", getPlayerCountMessage(event.newPlayerCount()));
-        this.discordClientService.getWebHookClient().sendMessageAsMinecraftUser(event.username(), event.displayName(), joinMessage);
+        String joinMessage = String.format("__*has left the server, %s*__", getPlayerCountMessage(event.getNewPlayerCount()));
+        this.discordClientService.getWebHookClient().sendMessageAsMinecraftUser(event.getUsername(), event.getDisplayName(), joinMessage);
     }
 
 }

@@ -32,10 +32,10 @@ public abstract class AbstractCommandService implements CommandService {
 
     @Override
     public final void execute(CommandSender sender, CommandContext context) {
-        CommandHandler handler = commands.get(context.label());
+        CommandHandler handler = commands.get(context.getLabel());
 
         logger.debug(String.format("Handler for /%s executed by %s (%s): %s",
-                context.label(),
+                context.getLabel(),
                 sender.getName(),
                 sender.getUuid(),
                 (null == handler) ? null : handler.getClass().getName()
@@ -50,7 +50,7 @@ public abstract class AbstractCommandService implements CommandService {
                 handler.handle(sender, context);
             } catch (Exception e) {
                 logger.severe(String.format("Exception handling command /%s for %s: %s",
-                        context.label(),
+                        context.getLabel(),
                         sender.getName(),
                         e.getMessage()
                     ));

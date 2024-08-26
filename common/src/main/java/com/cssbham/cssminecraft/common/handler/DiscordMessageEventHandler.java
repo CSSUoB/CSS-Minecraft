@@ -17,7 +17,7 @@ public class DiscordMessageEventHandler extends EventHandler<DiscordMessageEvent
 
     @Override
     public void handle(DiscordMessageEvent event) {
-        serverChatAdapter.broadcastMessage(buildMessageComponent(event.sender(), event.senderColour(), event.message()));
+        serverChatAdapter.broadcastMessage(buildMessageComponent(event.getSender(), event.getSenderColour(), event.getMessage()));
     }
 
     private Component buildMessageComponent(String name, int colour, String message) {

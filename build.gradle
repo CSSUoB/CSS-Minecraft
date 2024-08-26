@@ -1,17 +1,17 @@
 plugins {
     id "java"
-    id "com.gradleup.shadow" version "8.3.0"
+    id "com.github.johnrengelman.shadow" version "4.0.4"
 }
 
 subprojects {
     apply plugin: "java"
-    apply plugin: "com.gradleup.shadow"
+    apply plugin: "com.github.johnrengelman.shadow"
 
     group = "com.cssbham"
     version = "1.0.0"
 
-    sourceCompatibility = 21
-    targetCompatibility = 21
+    sourceCompatibility = 8
+    targetCompatibility = 8
 
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"

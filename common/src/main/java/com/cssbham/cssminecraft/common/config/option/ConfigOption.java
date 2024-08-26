@@ -37,6 +37,6 @@ public class ConfigOption {
                         throw new RuntimeException(e);
                     }
                 })
-                .collect(Collectors.toUnmodifiableList());
+                .collect(Collectors.toList());
     }
 }

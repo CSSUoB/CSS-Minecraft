@@ -17,7 +17,7 @@ public class SimpleEventBus implements EventBus {
     }
 
     public void dispatch(Event event) {
-        var handlers = this.handlers.getOrDefault(event.getClass(), new ArrayList<>());
+        List<EventHandler<?>> handlers = this.handlers.getOrDefault(event.getClass(), new ArrayList<>());
         logger.debug(String.format("Event dispatch: %s", event.getClass().getName()));
 
         for (EventHandler handler : handlers) {

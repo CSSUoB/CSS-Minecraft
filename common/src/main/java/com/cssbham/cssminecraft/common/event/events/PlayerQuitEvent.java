@@ -6,12 +6,35 @@ import java.util.UUID;
 
 /**
  * An event which should be dispatched when a player quits.
- *
- * @param sender UUID of leaving player
- * @param username username of leaving player
- * @param displayName display name of leaving player
- * @param newPlayerCount new player count
  */
-public record PlayerQuitEvent(UUID sender, String username, String displayName, int newPlayerCount) implements Event {
+public final class PlayerQuitEvent implements Event {
+
+    private final String sender;
+    private final String username;
+    private final String displayName;
+    private final int newPlayerCount;
+
+    public PlayerQuitEvent(String sender, String username, String displayName, int newPlayerCount) {
+        this.sender = sender;
+        this.username = username;
+        this.displayName = displayName;
+        this.newPlayerCount = newPlayerCount;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public int getNewPlayerCount() {
+        return newPlayerCount;
+    }
 
 }

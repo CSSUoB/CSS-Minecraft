@@ -16,8 +16,8 @@ public class ServerMessageEventHandler extends EventHandler<ServerMessageEvent> 
 
     @Override
     public void handle(ServerMessageEvent event) {
-        String sanitisedMessage = MarkdownSanitizer.sanitize(event.message()).replace("@", "@\u200B");
-        this.discordClientService.getWebHookClient().sendMessageAsMinecraftUser(event.username(), event.displayName(), sanitisedMessage);
+        String sanitisedMessage = MarkdownSanitizer.sanitize(event.getMessage()).replace("@", "@\u200B");
+        this.discordClientService.getWebHookClient().sendMessageAsMinecraftUser(event.getUsername(), event.getDisplayName(), sanitisedMessage);
     }
 
 }

@@ -19,10 +19,12 @@ public class PermissionPluginServiceFactory {
 
     public static PermissionPluginService forPlugin(String plugin) {
         try {
-            return switch (plugin) {
-                case "LuckPerms" -> checkClassAndBuild("net.luckperms.api.LuckPermsProvider", LuckPermsPermissionPluginService.class);
-                default -> new StubPermissionPluginService();
-            };
+            switch (plugin) {
+                case "LuckPerms":
+                    return checkClassAndBuild("net.luckperms.api.LuckPermsProvider", LuckPermsPermissionPluginService.class);
+                default:
+                    return new StubPermissionPluginService();
+            }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException |
                  InvocationTargetException e) {
             throw new RuntimeException(String.format("Permission plugin %s is not available", plugin));

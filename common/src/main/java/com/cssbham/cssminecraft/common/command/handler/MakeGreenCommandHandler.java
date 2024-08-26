@@ -34,7 +34,7 @@ public class MakeGreenCommandHandler implements CommandHandler {
             return;
         }
 
-        String arg = String.join(" ", context.args());
+        String arg = String.join(" ", context.getArgs());
         if (!arg.matches("[a-z0-9._]{2,32}|.{2,32}#[0-9]{4}")) {
             sender.sendMessage(Component.text("Invalid Discord tag format.").color(NamedTextColor.RED));
             return;

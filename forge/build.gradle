@@ -1,7 +1,15 @@
-plugins {
-    id "net.minecraftforge.gradle" version "[6.0,6.2)"
-    id "java"
+buildscript {
+    repositories {
+        maven { url = 'https://maven.minecraftforge.net/' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
+    }
 }
+
+apply plugin: 'net.minecraftforge.gradle'
+
 
 processResources {
     duplicatesStrategy = duplicatesStrategy.INCLUDE
@@ -12,7 +20,7 @@ processResources {
 }
 
 minecraft {
-    mappings channel: "official", version: minecraftVersion
+    mappings channel: "snapshot", version: "20171003-1.12"
 }
 
 dependencies {
@@ -42,7 +50,7 @@ shadowJar {
 
     relocate "net.kyori", "com.cssbham.cssminecraft.lib.adventure"
 
-    archiveFileName = "cssminecraft-forge-${project.version}.jar"
+    // archiveFileName = "cssminecraft-forge-${project.version}.jar"
 
     minimize()
 }

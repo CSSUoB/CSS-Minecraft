@@ -6,12 +6,34 @@ import java.util.UUID;
 
 /**
  * An event which should be dispatched when a chat message is sent.
- *
- * @param sender UUID of sender
- * @param username username of sender
- * @param displayName display name of sender
- * @param message message content
  */
-public record ServerMessageEvent(UUID sender, String username, String displayName, String message) implements Event {
+public final class ServerMessageEvent implements Event {
 
+    private final UUID sender;
+    private final String username;
+    private final String displayName;
+    private final String message;
+
+    public ServerMessageEvent(UUID sender, String username, String displayName, String message) {
+        this.sender = sender;
+        this.username = username;
+        this.displayName = displayName;
+        this.message = message;
+    }
+
+    public UUID getSender() {
+        return sender;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public String getMessage() {
+        return message;
+    }
 }

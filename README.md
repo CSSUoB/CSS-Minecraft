@@ -1,3 +1,7 @@
+> [!WARNING]  
+> This is a release branch for **Minecraft 1.12.2**. Do not build new features on this branch.  
+> This version was backported from commit 4ea0b36b208596676fc6d907b1073f226e0c738d.
+
 # CSS Minecraft
 This is the source code for CSS' Minecraft plugin/mod.
 
@@ -17,7 +21,6 @@ The configuration file will be located in the server configuration directory, wh
 Typically, this will be at:
 
 * **bukkit**: `plugins/CSSMinecraft/config.yml`
-* **fabric**: `config/cssminecraft/config.yml`
 * **forge**: `config/cssminecraft/config.yml`
 
 ```yaml
@@ -62,7 +65,6 @@ Each Gradle subproject has the following purpose:
 * `/common`: platform-independent interfaces and implementations which houses most logic - the 
 following subprojects depend on this
 * `/bukkit`: specific implementation for Bukkit / Spigot / Paper etc.
-* `/fabric`: specific implementation for Fabric servers
 * `/forge`: specific implementation for Forge servers
 
 Note that this is a server only mod, and will not work on clients.
