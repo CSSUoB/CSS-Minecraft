@@ -1,3 +1,10 @@
+> [!WARNING]  
+> This is a release branch for **Minecraft 1.18.2**. Do not build new features on this branch.  
+> This version was backported from commit da54a0a3c235086110e5b2e81a9325379d69aaa7.
+
+> [!NOTE]  
+> Only the Fabric module has been backported.
+
 # CSS Minecraft
 This is the source code for CSS' Minecraft plugin/mod.
 
