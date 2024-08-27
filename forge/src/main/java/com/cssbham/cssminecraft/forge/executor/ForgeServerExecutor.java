@@ -15,7 +15,7 @@ public class ForgeServerExecutor extends AsyncServerExecutor {
 
     @Override
     public void doSync(Runnable runnable) {
-        server.executeIfPossible(runnable);
+        server.addScheduledTask(runnable);
     }
 
 }

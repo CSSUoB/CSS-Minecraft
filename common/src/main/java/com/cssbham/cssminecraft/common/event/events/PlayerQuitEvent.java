@@ -9,19 +9,19 @@ import java.util.UUID;
  */
 public final class PlayerQuitEvent implements Event {
 
-    private final String sender;
+    private final UUID sender;
     private final String username;
     private final String displayName;
     private final int newPlayerCount;
 
-    public PlayerQuitEvent(String sender, String username, String displayName, int newPlayerCount) {
+    public PlayerQuitEvent(UUID sender, String username, String displayName, int newPlayerCount) {
         this.sender = sender;
         this.username = username;
         this.displayName = displayName;
         this.newPlayerCount = newPlayerCount;
     }
 
-    public String getSender() {
+    public UUID getSender() {
         return sender;
     }
 

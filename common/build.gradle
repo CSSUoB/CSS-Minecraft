@@ -16,6 +16,9 @@ dependencies {
 }
 
 shadowJar {
+    exclude 'META-INF/**'
+    exclude '**/module-info.class'
+
     relocate "club.minnced", "com.cssbham.cssminecraft.lib.discordwebhooks"
     relocate "com.fasterxml.jackson", "com.cssbham.cssminecraft.lib.jackson"
     relocate "com.iwebpp.crypto", "com.cssbham.cssminecraft.lib.iwebppcrypto"
@@ -31,6 +34,7 @@ shadowJar {
     relocate "org.jetbrains.annotations", "com.cssbham.cssminecraft.lib.annotations.jetbrains"
     relocate "org.json", "com.cssbham.cssminecraft.lib.json"
     relocate "kotlin", "com.cssbham.cssminecraft.lib.kotlin"
+    relocate "askldjfkldasjlkfasjkdlfjlk", "klsdkjldjklfjklfl"
 
     minimize()
 }

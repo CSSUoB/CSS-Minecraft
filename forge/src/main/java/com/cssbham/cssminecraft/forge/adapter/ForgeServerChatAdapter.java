@@ -3,9 +3,9 @@ package com.cssbham.cssminecraft.forge.adapter;
 import com.cssbham.cssminecraft.common.adapter.ServerChatAdapter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
-import net.minecraft.core.RegistryAccess;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.text.ITextComponent;
 
 import java.util.UUID;
 
@@ -19,24 +19,24 @@ public class ForgeServerChatAdapter implements ServerChatAdapter {
 
     @Override
     public void broadcastMessage(Component message) {
-        server.getPlayerList().broadcastSystemMessage(componentToMinecraftComponent(message), false);
+        server.getPlayerList().sendMessage(componentToMinecraftComponent(message), false);
     }
 
     @Override
     public void sendMessageToPlayer(UUID user, Component component) {
-        ServerPlayer player = server.getPlayerList().getPlayer(user);
+        EntityPlayerMP player = server.getPlayerList().getPlayerByUUID(user);
         if (null != player) {
-            player.sendSystemMessage(componentToMinecraftComponent(component));
+            player.sendMessage(componentToMinecraftComponent(component));
         }
     }
 
     @Override
     public void sendMessageToConsole(Component component) {
-        server.sendSystemMessage(componentToMinecraftComponent(component));
+        server.sendMessage(componentToMinecraftComponent(component));
     }
 
-    public net.minecraft.network.chat.Component componentToMinecraftComponent(Component component) {
-        return net.minecraft.network.chat.Component.Serializer.fromJson(GsonComponentSerializer.gson().serializeToTree(component), RegistryAccess.EMPTY);
+    public ITextComponent componentToMinecraftComponent(Component component) {
+        return ITextComponent.Serializer.fromJsonLenient(GsonComponentSerializer.colorDownsamplingGson().serializeToTree(component).toString());
     }
 
 }

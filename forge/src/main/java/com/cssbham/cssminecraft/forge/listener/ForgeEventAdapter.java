@@ -7,13 +7,13 @@ import com.cssbham.cssminecraft.common.event.events.PlayerJoinEvent;
 import com.cssbham.cssminecraft.common.event.events.PlayerQuitEvent;
 import com.cssbham.cssminecraft.common.event.events.ServerMessageEvent;
 import com.cssbham.cssminecraft.common.executor.ServerExecutor;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ServerChatEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
 import java.util.Objects;
 
@@ -44,40 +44,40 @@ public class ForgeEventAdapter implements PlatformEventAdapter {
 
     @SubscribeEvent
     public void onChat(ServerChatEvent event) {
-        ServerPlayer player = event.getPlayer();
+        EntityPlayerMP player = event.getPlayer();
         String name = event.getUsername();
 
         dispatchEvent(new ServerMessageEvent(
-                player.getUUID(),
+                player.getUniqueID(),
                 name,
-                (null == player.getDisplayName()) ? name : player.getDisplayName().getString(),
-                event.getRawText()
+                (null == player.getDisplayName()) ? name : player.getDisplayName().getUnformattedText(),
+                event.getMessage()
         ));
     }
 
     @SubscribeEvent
     public void onLogin(PlayerEvent.PlayerLoggedInEvent event) {
-        Player player = event.getEntity();
-        String name = player.getName().getString();
+        EntityPlayer player = event.player;
+        String name = player.getName();
 
         dispatchEvent(new PlayerJoinEvent(
-                player.getUUID(),
+                player.getUniqueID(),
                 name,
-                (null == player.getDisplayName()) ? name : player.getDisplayName().getString(),
-                server.getPlayerCount()
+                (null == player.getDisplayName()) ? name : player.getDisplayName().getUnformattedText(),
+                server.getCurrentPlayerCount()
         ));
     }
 
     @SubscribeEvent
     public void onLogout(PlayerEvent.PlayerLoggedOutEvent event) {
-        Player player = event.getEntity();
-        String name = player.getName().getString();
+        EntityPlayer player = event.player;
+        String name = player.getName();
 
         dispatchEvent(new PlayerQuitEvent(
-                player.getUUID(),
+                player.getUniqueID(),
                 name,
-                (null == player.getDisplayName()) ? name : player.getDisplayName().getString(),
-                server.getPlayerCount() - 1
+                (null == player.getDisplayName()) ? name : player.getDisplayName().getUnformattedText(),
+                server.getCurrentPlayerCount() - 1
         ));
     }
 }

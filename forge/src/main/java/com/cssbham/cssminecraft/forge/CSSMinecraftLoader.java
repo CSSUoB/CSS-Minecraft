@@ -1,24 +1,25 @@
 package com.cssbham.cssminecraft.forge;
 
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.server.ServerStartingEvent;
-import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
 
 /**
  * Entrypoint for Forge
  */
-@Mod(value = "cssminecraft")
+@Mod(modid = "cssminecraft", serverSideOnly = true, acceptableRemoteVersions = "*")
 public class CSSMinecraftLoader {
 
-    private final ForgeCSSMinecraftPlugin plugin;
+    private ForgeCSSMinecraftPlugin plugin;
 
-    public CSSMinecraftLoader() {
-        this.plugin = new ForgeCSSMinecraftPlugin();
-        MinecraftForge.EVENT_BUS.addListener(this::onServerStarted);
+    @Mod.EventHandler
+    public void onPreInit(FMLPreInitializationEvent event) {
+        this.plugin = new ForgeCSSMinecraftPlugin(event.getModConfigurationDirectory().toPath());
     }
 
-    public void onServerStarted(ServerStartingEvent event) {
+    @Mod.EventHandler
+    public void onServerStarted(FMLServerStartingEvent event) {
         this.plugin.setServer(event.getServer());
         try {
             this.plugin.enable();
@@ -28,7 +29,8 @@ public class CSSMinecraftLoader {
         }
     }
 
-    public void onServerStopping(ServerStoppingEvent event) {
+    @Mod.EventHandler
+    public void onServerStopping(FMLServerStoppingEvent event) {
         this.plugin.disable();
     }
 

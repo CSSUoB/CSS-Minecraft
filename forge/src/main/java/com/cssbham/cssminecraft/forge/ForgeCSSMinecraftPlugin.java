@@ -11,7 +11,6 @@ import com.cssbham.cssminecraft.common.AbstractCSSMinecraftPlugin;
 import com.cssbham.cssminecraft.common.adapter.ServerChatAdapter;
 import com.cssbham.cssminecraft.common.logger.Logger;
 import net.minecraft.server.MinecraftServer;
-import net.minecraftforge.fml.loading.FMLPaths;
 
 import java.nio.file.Path;
 
@@ -22,14 +21,16 @@ public class ForgeCSSMinecraftPlugin extends AbstractCSSMinecraftPlugin {
 
     public static final String MOD_ID = "cssminecraft";
     private final ForgeLogger logger;
+    private final Path configDirectory;
     private ForgeServerChatAdapter serverChatAdapter;
 
     private MinecraftServer server;
     private ForgeServerExecutor executor;
     private ForgeCommandService commandService;
 
-    public ForgeCSSMinecraftPlugin() {
+    public ForgeCSSMinecraftPlugin(Path configDirectory) {
         this.logger = new ForgeLogger(MOD_ID);
+        this.configDirectory = configDirectory;
     }
 
     @Override
@@ -56,7 +57,7 @@ public class ForgeCSSMinecraftPlugin extends AbstractCSSMinecraftPlugin {
 
     @Override
     public Path provideConfigurationPath() {
-        return FMLPaths.CONFIGDIR.get().resolve(MOD_ID).resolve("config.yml");
+        return configDirectory.resolve(MOD_ID).resolve("config.yml");
     }
 
     @Override
