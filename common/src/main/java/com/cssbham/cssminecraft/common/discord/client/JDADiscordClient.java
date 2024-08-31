@@ -86,15 +86,16 @@ public class JDADiscordClient extends ListenerAdapter implements DiscordClient {
 
     @Override
     public boolean isMember(String identifier) {
-        Guild g = jda.getGuildById(discordServerId);
-        if (g == null) return false;
-        Member m = g.getMembers().stream()
-                .filter(mm ->
-                        (mm.getUser().getName() + "#" + mm.getUser().getDiscriminator()).equalsIgnoreCase(identifier) ||
-                                mm.getUser().getName().equalsIgnoreCase(identifier)
-                ).findFirst().orElse(null);
-        if (m == null) return false;
-        return m.getRoles().stream().anyMatch(r -> r.getIdLong() == memberRoleId);
+        Guild guild = jda.getGuildById(discordServerId);
+        if (null == guild) return false;
+
+        Member member = guild.getMembers().stream()
+                .filter(m -> m.getUser().getName().equalsIgnoreCase(identifier))
+                .findFirst()
+                .orElse(null);
+        if (null == member) return false;
+
+        return member.getRoles().stream().anyMatch(r -> r.getIdLong() == memberRoleId);
     }
 
 }

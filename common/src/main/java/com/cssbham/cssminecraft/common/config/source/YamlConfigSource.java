@@ -65,28 +65,28 @@ public class YamlConfigSource implements ConfigSource {
     @Override
     public int getInteger(String path, int def) {
         if (null == data) return def;
-        Object val = data.getOrDefault(path, def);
-        if (!(val instanceof Number)) return def;
+        Object object = data.getOrDefault(path, def);
+        if (!(object instanceof Number value)) return def;
 
-        return ((Number) val).intValue();
+        return value.intValue();
     }
 
     @Override
     public long getLong(String path, long def) {
         if (null == data) return def;
-        Object val = data.getOrDefault(path, def);
-        if (!(val instanceof Number)) return def;
+        Object object = data.getOrDefault(path, def);
+        if (!(object instanceof Number value)) return def;
 
-        return ((Number) val).longValue();
+        return value.longValue();
     }
 
     @Override
     public boolean getBoolean(String path, boolean def) {
         if (null == data) return def;
-        Object val = data.getOrDefault(path, def);
-        if (!(val instanceof Boolean)) return def;
+        Object object = data.getOrDefault(path, def);
+        if (!(object instanceof Boolean value)) return def;
 
-        return (boolean) val;
+        return value;
     }
 
     @Override

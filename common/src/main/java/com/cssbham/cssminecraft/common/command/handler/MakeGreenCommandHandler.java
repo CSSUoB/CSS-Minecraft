@@ -14,6 +14,8 @@ import java.util.concurrent.ExecutionException;
 
 public class MakeGreenCommandHandler implements CommandHandler {
 
+    private static final String DISCORD_USERNAME_PATTERN = "[a-z0-9._]{2,32}";
+
     private final DiscordClientService discordClientService;
     private final PermissionPluginService permissionPluginService;
 
@@ -35,7 +37,7 @@ public class MakeGreenCommandHandler implements CommandHandler {
         }
 
         String arg = String.join(" ", context.args());
-        if (!arg.matches("[a-z0-9._]{2,32}|.{2,32}#[0-9]{4}")) {
+        if (!arg.matches(DISCORD_USERNAME_PATTERN)) {
             sender.sendMessage(Component.text("Invalid Discord tag format.").color(NamedTextColor.RED));
             return;
         }
