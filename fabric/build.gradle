@@ -1,0 +1,66 @@
+import net.fabricmc.loom.task.RemapJarTask
+
+plugins {
+    id "fabric-loom" version "1.7-SNAPSHOT"
+    id "java"
+}
+
+processResources {
+    duplicatesStrategy = duplicatesStrategy.INCLUDE
+    from(sourceSets.main.resources.srcDirs) {
+        include "fabric.mod.json"
+        expand("version": project.version)
+    }
+}
+
+repositories {
+    maven { url = "https://maven.fabricmc.net/" }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    mappings "net.fabricmc:yarn:${yarn_mappings}"
+    modImplementation "net.fabricmc:fabric-loader:${loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+
+    implementation ("net.kyori:adventure-api:4.17.0") {
+        exclude(module: "adventure-bom")
+        exclude(module: "annotations")
+    }
+    implementation ("net.kyori:adventure-text-serializer-gson:4.17.0") {
+        exclude(module: "adventure-bom")
+        exclude(module: "adventure-api")
+        exclude(module: "annotations")
+        exclude(module: "auto-service-annotations")
+        exclude(module: "gson")
+    }
+
+    implementation project(path: ":common", configuration: "shadow")
+}
+
+shadowJar {
+    dependencies {
+        include(project(":common"))
+        include(dependency("net.kyori:.*"))
+    }
+
+    relocate "net.kyori", "com.cssbham.cssminecraft.lib.adventure"
+
+    exclude "/mappings/*"
+
+    archiveFileName = "cssminecraft-fabric-${project.version}-no-map.jar"
+}
+
+tasks.register("remapShadowJar", RemapJarTask) {
+    dependsOn tasks.shadowJar
+    input = tasks.shadowJar.archiveFile
+    addNestedDependencies = true
+    archiveFileName = "cssminecraft-fabric-${project.version}.jar"
+}
+
+tasks.assemble.dependsOn tasks.remapShadowJar
+
+artifacts {
+    archives remapShadowJar
+    shadow shadowJar
+}

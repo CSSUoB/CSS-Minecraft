@@ -1,0 +1,48 @@
+plugins {
+    id "net.minecraftforge.gradle" version "[6.0,6.2)"
+    id "java"
+}
+
+processResources {
+    duplicatesStrategy = duplicatesStrategy.INCLUDE
+    from(sourceSets.main.resources.srcDirs) {
+        include "**/mods.toml"
+        expand("version": project.version)
+    }
+}
+
+minecraft {
+    mappings channel: "official", version: minecraftVersion
+}
+
+dependencies {
+    minecraft ("net.minecraftforge:forge:${minecraftVersion}-${forgeVersion}")
+
+    implementation ("net.kyori:adventure-api:4.17.0") {
+        exclude(module: "adventure-bom")
+        exclude(module: "annotations")
+    }
+    implementation ("net.kyori:adventure-text-serializer-gson:4.17.0") {
+        exclude(module: "adventure-bom")
+        exclude(module: "adventure-api")
+        exclude(module: "annotations")
+        exclude(module: "auto-service-annotations")
+        exclude(module: "gson")
+    }
+
+    implementation project(path: ":common", configuration: "shadow")
+}
+
+
+shadowJar {
+    dependencies {
+        include(project(":common"))
+        include(dependency("net.kyori:.*"))
+    }
+
+    relocate "net.kyori", "com.cssbham.cssminecraft.lib.adventure"
+
+    archiveFileName = "cssminecraft-forge-${project.version}.jar"
+
+    minimize()
+}

@@ -3,39 +3,42 @@ name: "Build"
 on:
   push:
     branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
 jobs:
   build:
-    name: Build
-    runs-on: ubuntu-latest
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
-
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'java' ]
+        target: [ bukkit, fabric, forge ]
+
+    name: Build ${{ matrix.target }}
+    runs-on: ubuntu-latest
+    if: "!startsWith(github.event.commits[0].message, '[ci-skip]')"
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
-      with:
-        languages: ${{ matrix.language }}
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: temurin
+          cache: gradle
+          cache-dependency-path: |
+            **/*.gradle*
+            **/gradle-wrapper.properties
 
-    - name: Setup Java and Maven
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: maven
+      - name: Build with Gradle
+        run: "./gradlew :${{matrix.target}}:build"
 
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
-
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
+      - name: Upload builds
+        uses: actions/upload-artifact@v4
+        with:
+          name: "cssminecraft-${{matrix.target}}.jar"
+          path: |
+            ${{matrix.target}}/build/libs/cssminecraft-${{matrix.target}}-*.jar
+            !**/*-no-map.jar
+          if-no-files-found: error
