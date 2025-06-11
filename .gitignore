@@ -3,6 +3,7 @@ target/
 .idea
 .gradle
 **/build/
+**/run
 !src/**/build/
 gradle-app.setting
 !gradle-wrapper.jar
