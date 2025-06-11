@@ -13,7 +13,7 @@ repositories {
 }
 
 base {
-    archivesName = mod_id
+    archivesName = mod_id + "-neoforge"
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -119,11 +119,11 @@ dependencies {
 
     // implementation "net.neoforged:neoforge:${neo_version}"
 
-    implementation ("net.kyori:adventure-api:4.17.0") {
+    jarJar(implementation("net.kyori:adventure-api:4.17.0")) {
         exclude(module: "adventure-bom")
         exclude(module: "annotations")
     }
-    implementation ("net.kyori:adventure-text-serializer-gson:4.17.0") {
+    jarJar(implementation("net.kyori:adventure-text-serializer-gson:4.17.0")) {
         exclude(module: "adventure-bom")
         exclude(module: "adventure-api")
         exclude(module: "annotations")
@@ -131,8 +131,14 @@ dependencies {
         exclude(module: "gson")
     }
 
-    implementation project(path: ":common", configuration: "shadow")
+    jarJar(implementation(project(path: ":common", configuration: "shadow")))
+
+    // additionalRuntimeClasspath("com.cssbham:common:.*")
+    additionalRuntimeClasspath("net.kyori:adventure-api:4.17.0")
+    additionalRuntimeClasspath("net.kyori:adventure-text-serializer-gson:4.17.0")
 }
+
+tasks.shadowJar.enabled = false
 
 // This block of code expands all declared replace properties in the specified resource targets.
 // A missing property will result in an error. Properties are expanded using ${} Groovy notation.
@@ -168,19 +174,4 @@ idea {
         downloadSources = true
         downloadJavadoc = true
     }
-}
-
-shadowJar {
-    dependencies {
-        include(project(":common"))
-        include(dependency("net.kyori:.*"))
-        exclude(dependency("net.neoforged:.*"))
-        exclude(dependency("io.github.llamalad7:mixinextras-neoforge:.*"))
-    }
-
-    relocate "net.kyori", "com.cssbham.cssminecraft.lib.adventure"
-
-    archiveFileName = "cssminecraft-neoforge-${project.version}.jar"
-
-    minimize()
 }
