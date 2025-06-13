@@ -119,11 +119,11 @@ dependencies {
 
     // implementation "net.neoforged:neoforge:${neo_version}"
 
-    jarJar(implementation("net.kyori:adventure-api:4.17.0")) {
+    implementation(jarJar("net.kyori:adventure-api:4.17.0")) {
         exclude(module: "adventure-bom")
         exclude(module: "annotations")
     }
-    jarJar(implementation("net.kyori:adventure-text-serializer-gson:4.17.0")) {
+    implementation(jarJar("net.kyori:adventure-text-serializer-gson:4.17.0")) {
         exclude(module: "adventure-bom")
         exclude(module: "adventure-api")
         exclude(module: "annotations")
@@ -131,7 +131,11 @@ dependencies {
         exclude(module: "gson")
     }
 
-    jarJar(implementation(project(path: ":common", configuration: "shadow")))
+    implementation(jarJar("net.kyori:adventure-platform-neoforge:6.0.0"))
+
+    implementation(jarJar(project(path: ":common", configuration: "shadow")))
+
+
 
     // additionalRuntimeClasspath("com.cssbham:common:.*")
     additionalRuntimeClasspath("net.kyori:adventure-api:4.17.0")
