@@ -10,6 +10,7 @@ import com.cssbham.cssminecraft.common.executor.ServerExecutor;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.ServerChatEvent;
@@ -42,7 +43,7 @@ public class ForgeEventAdapter implements PlatformEventAdapter {
         executor.doAsync(() -> eventBus.dispatch(event));
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGH)
     public void onChat(ServerChatEvent event) {
         ServerPlayer player = event.getPlayer();
         String name = event.getUsername();

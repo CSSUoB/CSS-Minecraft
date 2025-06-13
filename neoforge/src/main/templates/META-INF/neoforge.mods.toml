@@ -4,7 +4,7 @@ loaderVersion="${loader_version_range}" #mandatory
 license="${mod_license}"
 
 [[mods]] #mandatory
-modId="${mod_id}"
+modId="cssminecraft"
 version="${mod_version}"
 displayName="${mod_name}"
 logoFile="logo.png"
@@ -13,23 +13,23 @@ description='''
   CSS' Minecraft plugin
   '''
 
-[[dependencies."${mod_id}"]]
+[[dependencies.cssminecraft]]
 modId="neoforge"
 type="required"
 versionRange="${neo_version_range}"
 ordering="NONE"
 side="BOTH"
 
-[[dependencies."${mod_id}"]]
+[[dependencies.cssminecraft]]
 modId="minecraft"
 type="required"
 versionRange="${minecraft_version_range}"
 ordering="NONE"
 side="BOTH"
 
-[[dependencies."${mod_id}"]]
+[[dependencies.cssminecraft]]
 modId="luckperms"
-type="optional"
+type="required"
 versionRange="*"
-ordering="AFTER"
+ordering="BEFORE"
 side="SERVER"
