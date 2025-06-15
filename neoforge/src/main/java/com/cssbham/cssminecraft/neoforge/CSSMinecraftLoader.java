@@ -16,6 +16,7 @@ public class CSSMinecraftLoader {
     public CSSMinecraftLoader() {
         this.plugin = new NeoForgeCSSMinecraftPlugin();
         NeoForge.EVENT_BUS.addListener(this::onServerStarted);
+        NeoForge.EVENT_BUS.addListener(this::onServerStopping);
     }
 
     public void onServerStarted(ServerStartingEvent event) {
