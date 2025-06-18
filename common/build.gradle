@@ -1,6 +1,11 @@
 plugins {
     id "java"
     id "java-library"
+    id "maven-publish"
+}
+
+compileJava {
+    options.compilerArgs += "-g"
 }
 
 dependencies {
@@ -33,4 +38,16 @@ shadowJar {
     relocate "kotlin", "com.cssbham.cssminecraft.lib.kotlin"
 
     minimize()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.cssbham'
+            artifactId = 'common'
+            version = '1.0.0'
+
+            from components.java
+        }
+    }
 }

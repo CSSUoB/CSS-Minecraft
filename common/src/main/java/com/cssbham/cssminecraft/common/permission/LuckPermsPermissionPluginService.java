@@ -20,7 +20,14 @@ public class LuckPermsPermissionPluginService implements PermissionPluginService
                     user.data().add(Node.builder("group.member").build());
                     user.data().remove(Node.builder("group.guest").build());
                 }
-        );
+        ).whenCompleteAsync((v, err) -> {
+            if (err != null) {
+                err.printStackTrace();
+                return;
+            }
+
+            System.out.println("Success");
+        });
     }
 
     @Override

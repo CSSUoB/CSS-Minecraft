@@ -45,13 +45,20 @@ public class MakeGreenCommandHandler implements CommandHandler {
         if (discordClientService.getDiscordClient().isMember(arg)) {
             sender.sendMessage(Component.text("Making you green...").color(NamedTextColor.GRAY));
             try {
-                permissionPluginService.grantMemberRole(sender.getUuid()).get();
-            } catch (InterruptedException | ExecutionException e) {
+                permissionPluginService.grantMemberRole(sender.getUuid()).whenComplete((v, err) -> {
+                    if (err != null) {
+                        sender.sendMessage(Component.text("There was a problem making you green. Try again later.")
+                                .color(NamedTextColor.RED));
+                        throw new RuntimeException(err);
+                    }
+
+                    sender.sendMessage(Component.text("Congratulations, you are now green!").color(NamedTextColor.GREEN));
+                });
+            } catch (Exception e) {
                 sender.sendMessage(Component.text("There was a problem making you green. Try again later.")
                         .color(NamedTextColor.RED));
                 throw new RuntimeException(e);
             }
-            sender.sendMessage(Component.text("Congratulations, you are now green!").color(NamedTextColor.GREEN));
         } else {
             sender.sendMessage(Component.text("You don't appear to be a ").color(NamedTextColor.RED).append(
                             Component.text("Member").color(NamedTextColor.GREEN)

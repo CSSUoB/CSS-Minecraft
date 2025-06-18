@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [ bukkit, fabric, forge ]
+        target: [ bukkit, fabric, forge, neoforge ]
 
     name: Build ${{ matrix.target }}
     runs-on: ubuntu-latest

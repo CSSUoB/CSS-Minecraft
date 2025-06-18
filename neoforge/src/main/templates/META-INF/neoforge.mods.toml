@@ -1,0 +1,35 @@
+
+modLoader="javafml" #mandatory
+loaderVersion="${loader_version_range}" #mandatory
+license="${mod_license}"
+
+[[mods]] #mandatory
+modId="cssminecraft"
+version="${mod_version}"
+displayName="${mod_name}"
+logoFile="logo.png"
+authors="LMBishop"
+description='''
+  CSS' Minecraft plugin
+  '''
+
+[[dependencies.cssminecraft]]
+modId="neoforge"
+type="required"
+versionRange="${neo_version_range}"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.cssminecraft]]
+modId="minecraft"
+type="required"
+versionRange="${minecraft_version_range}"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.cssminecraft]]
+modId="luckperms"
+type="required"
+versionRange="*"
+ordering="BEFORE"
+side="SERVER"
